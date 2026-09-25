@@ -52,6 +52,14 @@ function smartwerk_assets(): void {
         $version,
         true
     );
+
+    wp_localize_script(
+        'smartwerk-theme',
+        'smartwerkTheme',
+        [
+            'storeCartUrl' => esc_url_raw(rest_url('wc/store/v1/cart')),
+        ]
+    );
 }
 add_action('wp_enqueue_scripts', 'smartwerk_assets');
 
@@ -180,6 +188,25 @@ function smartwerk_primary_fallback(): void {
     echo '</ul>';
 }
 
+function smartwerk_mobile_fallback(): void {
+    $current = smartwerk_page_key();
+
+    echo '<ul class="mobile-menu smartwerk-fallback-menu">';
+
+    foreach (smartwerk_primary_items() as $item) {
+        $link_classes = trim($item['class'] . ' ' . ($current === $item['key'] ? 'is-active' : ''));
+
+        printf(
+            '<li class="menu-item"><a href="%1$s" class="%2$s">%3$s</a></li>',
+            esc_url($item['url']),
+            esc_attr($link_classes),
+            esc_html($item['label'])
+        );
+    }
+
+    echo '</ul>';
+}
+
 function smartwerk_menu_link_attributes(array $atts, $item, $args): array {
     if (!empty($args->theme_location) && $args->theme_location === 'primary') {
         $classes = isset($atts['class']) ? explode(' ', (string) $atts['class']) : [];
@@ -194,16 +221,3 @@ function smartwerk_menu_link_attributes(array $atts, $item, $args): array {
     return $atts;
 }
 add_filter('nav_menu_link_attributes', 'smartwerk_menu_link_attributes', 10, 3);
-
-/**
- * Keeps the new theme safe while the old SmartWerk page content is migrated.
- * Nothing is deleted from WordPress. Legacy page-level headers/footers are
- * hidden by the theme stylesheet until Easy MCP/WPWriter cleans those pages.
- */
-function smartwerk_is_legacy_transfer_page(): bool {
-    if (!is_page()) {
-        return false;
-    }
-
-    return in_array(get_queried_object_id(), [1628, 1636, 1638, 1640, 1642, 1657], true);
-}
