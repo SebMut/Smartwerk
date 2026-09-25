@@ -1,0 +1,129 @@
+name: Build SmartWerk Theme 1.2.19
+
+on:
+  push:
+    branches:
+      - smartwerk-theme-1.2.19-finalization
+    paths:
+      - 'wordpress-theme/smartwerk-1.2.19/**'
+      - '.github/workflows/build-smartwerk-1.2.19.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required theme files
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="wordpress-theme/smartwerk-1.2.19"
+          test -f "$THEME/style.css"
+          test -f "$THEME/functions.php"
+          test -f "$THEME/header.php"
+          test -f "$THEME/footer.php"
+          test -f "$THEME/page.php"
+          test -f "$THEME/front-page.php"
+          test -f "$THEME/index.php"
+          test -f "$THEME/woocommerce.php"
+          test -f "$THEME/404.php"
+          test -f "$THEME/theme.json"
+          test -f "$THEME/assets/js/theme.js"
+          grep -q "Version: 1.2.19" "$THEME/style.css"
+          grep -q "smartwerk_final_asset_scope" "$THEME/functions.php"
+          grep -q "smartwerk_ensure_native_product_schema" "$THEME/functions.php"
+          grep -q "URLSearchParams" "$THEME/assets/js/theme.js"
+          ! grep -q "smartwerk_strip_legacy_page_shells" "$THEME/functions.php"
+
+      - name: PHP lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          find wordpress-theme/smartwerk-1.2.19 -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: JavaScript syntax check
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check wordpress-theme/smartwerk-1.2.19/assets/js/theme.js
+
+      - name: Build production minified assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="wordpress-theme/smartwerk-1.2.19"
+          mkdir -p "$THEME/assets/css"
+          npx --yes clean-css-cli@5.6.3 -o "$THEME/assets/css/theme.min.css" "$THEME/style.css"
+          npx --yes terser@5.44.0 "$THEME/assets/js/theme.js" -c -m -o "$THEME/assets/js/theme.min.js"
+          test -s "$THEME/assets/css/theme.min.css"
+          test -s "$THEME/assets/js/theme.min.js"
+          node --check "$THEME/assets/js/theme.min.js"
+
+      - name: CSS sanity audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          css=Path("wordpress-theme/smartwerk-1.2.19/style.css").read_text(encoding="utf-8")
+          depth=0
+          in_comment=False
+          quote=None
+          i=0
+          while i < len(css):
+              if not quote and css.startswith("/*", i):
+                  j=css.find("*/", i+2)
+                  if j < 0:
+                      raise SystemExit("Unclosed CSS comment")
+                  i=j+2
+                  continue
+              ch=css[i]
+              if quote:
+                  if ch=="\\":
+                      i+=2
+                      continue
+                  if ch==quote:
+                      quote=None
+              elif ch in "'\"":
+                  quote=ch
+              elif ch=="{":
+                  depth+=1
+              elif ch=="}":
+                  depth-=1
+                  if depth < 0:
+                      raise SystemExit("Unexpected CSS closing brace")
+              i+=1
+          if depth != 0:
+              raise SystemExit(f"Unbalanced CSS braces: {depth}")
+          important=len(re.findall(r"!important\b",css,re.I))
+          print(f"CSS syntax sanity OK; !important occurrences: {important}")
+          PY
+
+      - name: Package and validate installable ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd wordpress-theme
+          zip -r ../dist/smartwerk-theme-1.2.19.zip smartwerk-1.2.19 -x '*.DS_Store'
+          cd ..
+          unzip -t dist/smartwerk-theme-1.2.19.zip
+          unzip -l dist/smartwerk-theme-1.2.19.zip | grep -q 'smartwerk-1.2.19/style.css'
+          unzip -l dist/smartwerk-theme-1.2.19.zip | grep -q 'smartwerk-1.2.19/functions.php'
+          unzip -l dist/smartwerk-theme-1.2.19.zip | grep -q 'smartwerk-1.2.19/assets/css/theme.min.css'
+          unzip -l dist/smartwerk-theme-1.2.19.zip | grep -q 'smartwerk-1.2.19/assets/js/theme.min.js'
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartwerk-theme-1.2.19
+          path: dist/smartwerk-theme-1.2.19.zip
+          if-no-files-found: error
+          retention-days: 30
