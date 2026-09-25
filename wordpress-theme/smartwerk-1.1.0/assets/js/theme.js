@@ -100,8 +100,56 @@
     applyState();
   }
 
+  function setCartCount(count) {
+    const value = Math.max(0, Number.parseInt(count, 10) || 0);
+
+    document.querySelectorAll('[data-cart-count]').forEach(node => {
+      node.textContent = String(value);
+      node.hidden = value === 0;
+    });
+  }
+
+  async function refreshCartCount() {
+    const url = window.smartwerkTheme?.storeCartUrl;
+    if (!url) return;
+
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: { Accept: 'application/json' },
+        cache: 'no-store'
+      });
+
+      if (!response.ok) return;
+
+      const cart = await response.json();
+      if (typeof cart?.items_count !== 'undefined') {
+        setCartCount(cart.items_count);
+      }
+    } catch (_) {
+      // The PHP-rendered counter remains the fallback if the Store API is unavailable.
+    }
+  }
+
+  function setupCartCountSync() {
+    if (!document.querySelector('[data-cart-count]')) return;
+
+    ['wc-blocks_added_to_cart', 'wc-blocks_removed_from_cart'].forEach(eventName => {
+      document.body.addEventListener(eventName, refreshCartCount);
+    });
+
+    if (window.jQuery) {
+      window.jQuery(document.body).on(
+        'added_to_cart removed_from_cart updated_wc_div',
+        () => window.setTimeout(refreshCartCount, 0)
+      );
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     setupMobileMenu();
     setupMobileKnowledge();
+    setupCartCountSync();
   });
 })();
