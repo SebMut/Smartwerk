@@ -1044,8 +1044,8 @@ function smartwerk_page_seo_map(): array {
             'description' => 'Individuelle 3D-Druck-Lösung nach Idee, Skizze, Foto, Muster oder Maßen – von der Abstimmung bis zum fertigen Bauteil.',
         ],
         1640 => [
-            'title' => 'STL-Dateien finden & 3D-Modell drucken | SmartWerk',
-            'description' => 'Quellen für STL- und 3D-Dateien finden, Lizenz prüfen und das passende Modell anschließend bei SmartWerk drucken lassen.',
+            'title' => '3D-Druck Wissen & STL-Dateien | SmartWerk',
+            'description' => '3D-Druck verständlich erklärt: Drucker, Filamente, Slicer, Einstellungen, Zubehör, Fehlerbilder und Quellen für STL-Dateien.',
         ],
         1642 => [
             'title' => '3D-Druck Projekte & Beispiele | SmartWerk',
@@ -1345,3 +1345,40 @@ function smartwerk_redirect_legacy_pages(): void {
     }
 }
 add_action('template_redirect', 'smartwerk_redirect_legacy_pages', 2);
+
+
+/**
+ * WooCommerce normally generates Product JSON-LD during the single-product
+ * summary and outputs it in wp_footer. If another integration suppresses the
+ * generator, trigger WooCommerce's own generator once after the product
+ * template instead of emitting a competing custom Product schema.
+ */
+function smartwerk_ensure_native_product_schema(): void {
+    if (!function_exists('is_product') || !is_product() || !function_exists('WC')) {
+        return;
+    }
+
+    $wc = WC();
+    if (!$wc || !isset($wc->structured_data) || !is_object($wc->structured_data)) {
+        return;
+    }
+
+    if (!method_exists($wc->structured_data, 'get_structured_data')
+        || !method_exists($wc->structured_data, 'generate_product_data')) {
+        return;
+    }
+
+    $existing = $wc->structured_data->get_structured_data(['product']);
+    if (!empty($existing)) {
+        return;
+    }
+
+    $product = function_exists('wc_get_product')
+        ? wc_get_product(get_queried_object_id())
+        : null;
+
+    if ($product instanceof WC_Product) {
+        $wc->structured_data->generate_product_data($product);
+    }
+}
+add_action('woocommerce_after_single_product', 'smartwerk_ensure_native_product_schema', 99);
