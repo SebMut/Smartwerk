@@ -51,13 +51,20 @@
 
     <nav class="mobile-nav" id="mobile-menu" aria-label="<?php esc_attr_e('Mobile Navigation', 'smartwerk'); ?>" hidden>
         <div class="site-shell mobile-nav-inner">
-            <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Startseite', 'smartwerk'); ?></a>
-            <a href="<?php echo esc_url(home_url('/3d-druck-bestellen/')); ?>"><?php esc_html_e('3D-Druck', 'smartwerk'); ?></a>
-            <a href="<?php echo esc_url(home_url('/individuelle-anfertigung/')); ?>"><?php esc_html_e('Individuell', 'smartwerk'); ?></a>
-            <a href="<?php echo esc_url(home_url('/smartwerk-shop/')); ?>"><?php esc_html_e('Shop', 'smartwerk'); ?></a>
-            <a href="<?php echo esc_url(home_url('/projekte/')); ?>"><?php esc_html_e('Projekte', 'smartwerk'); ?></a>
-            <a href="<?php echo esc_url(home_url('/stl-dateien/')); ?>"><?php esc_html_e('Wissen & STL', 'smartwerk'); ?></a>
-            <a href="<?php echo esc_url(home_url('/kontakt/')); ?>"><?php esc_html_e('Kontakt', 'smartwerk'); ?></a>
+            <?php
+            if (has_nav_menu('primary')) {
+                wp_nav_menu([
+                    'theme_location' => 'primary',
+                    'container'      => false,
+                    'items_wrap'     => '<ul class="mobile-menu">%3$s</ul>',
+                    'fallback_cb'    => false,
+                    'depth'          => 1,
+                ]);
+            } else {
+                smartwerk_mobile_fallback();
+            }
+            ?>
+            <a class="mobile-contact" href="<?php echo esc_url(home_url('/kontakt/')); ?>"><?php esc_html_e('Kontakt', 'smartwerk'); ?></a>
             <a class="mobile-price" href="<?php echo esc_url(home_url('/3d-druck-bestellen/#konfigurator')); ?>">
                 <span><?php esc_html_e('Preis berechnen', 'smartwerk'); ?></span><b aria-hidden="true">→</b>
             </a>
