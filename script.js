@@ -114,13 +114,27 @@ function headerMarkup() {
 function footerMarkup() {
   return `
     <footer class="site-footer">
-      <div class="site-shell footer-grid">
-        <a class="footer-brand" href="index.html">
-          <img src="${SITE.logo}" alt="SmartWerk.art" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
-          <span class="brand-fallback" aria-hidden="true">SmartWerk.art</span>
-        </a>
-        <p>Online 3D-Druck &amp; individuelle Fertigung aus Feldkirchen bei München.</p>
-        <nav class="footer-links" aria-label="Rechtliches">
+      <div class="site-shell footer-main">
+        <div class="footer-intro">
+          <a class="footer-brand" href="index.html" aria-label="SmartWerk Startseite">
+            <img src="${SITE.logo}" alt="SmartWerk.art" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+            <span class="brand-fallback" aria-hidden="true">SmartWerk.art</span>
+          </a>
+          <p>Online 3D-Druck &amp; individuelle Fertigung aus Feldkirchen bei München.</p>
+          <span class="footer-location">Feldkirchen bei München · Einzelstücke &amp; Kleinserien</span>
+        </div>
+
+        <nav class="footer-services" aria-label="SmartWerk Leistungen">
+          <span>Leistungen</span>
+          <a href="3d-druck.html#konfigurator">3D-Druck</a>
+          <a href="individuell.html">Individuelle Fertigung</a>
+          <a href="shop.html">Shop</a>
+        </nav>
+      </div>
+
+      <div class="site-shell footer-bottom">
+        <span class="footer-service-line">3D-Druck · Individuelle Fertigung · Shop</span>
+        <nav class="footer-links" aria-label="Kontakt und Rechtliches">
           <a href="kontakt.html">Kontakt</a>
           <a href="impressum.html">Impressum</a>
           <a href="datenschutz.html">Datenschutz</a>
