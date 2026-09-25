@@ -121,7 +121,7 @@ function footerMarkup() {
             <span class="brand-fallback" aria-hidden="true">SmartWerk.art</span>
           </a>
           <p>Online 3D-Druck &amp; individuelle Fertigung aus Feldkirchen bei München.</p>
-          <span class="footer-location">Feldkirchen bei München · Einzelstücke &amp; Kleinserien</span>
+          <span class="footer-location">Wilhelm-Vetter-Strasse 1 · 85622 Feldkirchen</span><span class="footer-contact"><a href="tel:+491608462257">+49 (0) 160 846 22 57</a><i>·</i><a href="mailto:info@smartwerk.art">info@smartwerk.art</a></span>
         </div>
 
         <nav class="footer-services" aria-label="SmartWerk Leistungen">
