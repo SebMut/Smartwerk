@@ -196,18 +196,29 @@ function showToast(message) {
 }
 
 function productCard(product) {
+  const categoryLabel = {
+    sport: 'Sport & Training',
+    personalisiert: 'Personalisierbar',
+    geschenk: 'Geschenkidee',
+    individuell: 'Individuelle Fertigung'
+  }[product.category] || 'SmartWerk Produkt';
+
   return `
     <article class="product-card" data-category="${product.category}">
       <div class="product-image-wrap">
-        <img class="product-image" src="${product.image}" alt="${product.name}">
+        <img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy">
         <span class="product-badge">${product.badge}</span>
       </div>
       <div class="product-body">
+        <span class="product-category">${categoryLabel}</span>
         <h3>${product.name}</h3>
-        <p class="product-price">${product.price}</p>
-        <p class="product-meta">Kein Mehrwertsteuerausweis, da Kleinunternehmer nach §19 UStG.</p>
-        <p class="product-shipping">zzgl. Versandkosten</p>
-        <button class="button button-primary product-button" data-add-cart="${product.id}">Ausführung wählen</button>
+        <div class="product-bottom">
+          <p class="product-price">${product.price}</p>
+          <button class="product-button" data-add-cart="${product.id}" aria-label="${product.name} auswählen">
+            <span>Ausführung wählen</span>
+            <b aria-hidden="true">→</b>
+          </button>
+        </div>
       </div>
     </article>`;
 }
