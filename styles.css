@@ -3020,3 +3020,108 @@ body[data-page="home"] .product-category{
     border-top:0;
   }
 }
+
+
+/* Header CTA hierarchy — one clear primary action */
+.desktop-nav .nav-shop{
+  padding:8px 0;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#3c4043;
+}
+
+.desktop-nav .nav-shop:hover,
+.desktop-nav .nav-shop.is-active{
+  background:transparent;
+  color:var(--primary);
+}
+
+.desktop-nav .nav-shop.is-active::after{
+  display:block;
+}
+
+.header-price{
+  position:relative;
+  min-height:44px;
+  min-width:160px;
+  padding:0 8px 0 17px;
+  gap:11px;
+  border-color:var(--primary);
+  border-radius:11px;
+  background:linear-gradient(135deg,#0b7c84 0%,#096d74 100%);
+  box-shadow:0 7px 18px rgba(11,124,132,.18);
+  font-size:.8rem;
+  letter-spacing:-.01em;
+}
+
+.header-price span{
+  white-space:nowrap;
+}
+
+.header-price b{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  flex:0 0 30px;
+  border-radius:8px;
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  font-size:.92rem;
+  font-weight:700;
+  transition:transform .18s ease,background .18s ease;
+}
+
+.header-price:hover{
+  background:linear-gradient(135deg,#086e75 0%,#075e64 100%);
+  box-shadow:0 9px 22px rgba(11,124,132,.22);
+}
+
+.header-price:hover b{
+  transform:translateX(2px);
+  background:rgba(255,255,255,.2);
+}
+
+.header-price:focus-visible{
+  outline:3px solid rgba(11,124,132,.2);
+  outline-offset:3px;
+}
+
+.mobile-nav .mobile-price{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin-top:7px;
+  padding:13px 12px 13px 15px;
+  border-radius:10px;
+  background:var(--primary);
+  color:#fff;
+  font-weight:850;
+}
+
+.mobile-nav .mobile-price:hover{
+  background:var(--primary-dark);
+  color:#fff;
+}
+
+.mobile-nav .mobile-price b{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:8px;
+  background:rgba(255,255,255,.14);
+}
+
+@media(max-width:1180px) and (min-width:1081px){
+  .header-price{
+    min-width:150px;
+    padding-left:14px;
+  }
+
+  .desktop-nav{
+    gap:20px;
+  }
+}
