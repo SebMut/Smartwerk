@@ -4168,6 +4168,33 @@ body.smartwerk-theme .sw-global-footer{
   display:none!important;
 }
 
+
+/* WordPress mobile menu keeps the same visual treatment with semantic ul > li > a markup. */
+.mobile-nav .mobile-menu{
+  display:grid;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.mobile-nav .mobile-menu > li{
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+
+.mobile-nav .mobile-menu > li > a{
+  display:block;
+}
+
+.mobile-nav .mobile-menu > li.current-menu-item > a,
+.mobile-nav .mobile-menu > li.current_page_item > a,
+.mobile-nav .mobile-menu > li.current-menu-ancestor > a,
+.mobile-nav .mobile-menu > li > a.is-active{
+  background:var(--soft);
+  color:var(--primary);
+}
+
 /* WordPress/Gutenberg defaults should not add unwanted page margins. */
 body.smartwerk-theme .wp-block-post-content,
 body.smartwerk-theme .wp-site-blocks{
@@ -4434,7 +4461,7 @@ body.smartwerk-theme .legal{
   }
 
   body.smartwerk-theme.woocommerce ul.products{
-    grid-template-columns:repeat(3,minmax(0,1fr));
+    grid-template-columns:repeat(2,minmax(0,1fr));
   }
 }
 
