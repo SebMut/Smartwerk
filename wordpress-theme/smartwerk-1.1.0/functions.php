@@ -36,20 +36,24 @@ function smartwerk_theme_setup(): void {
 add_action('after_setup_theme', 'smartwerk_theme_setup');
 
 function smartwerk_assets(): void {
-    $version = wp_get_theme()->get('Version');
+    $version      = wp_get_theme()->get('Version');
+    $style_file   = get_stylesheet_directory() . '/style.css';
+    $script_file  = get_template_directory() . '/assets/js/theme.js';
+    $style_ver    = is_readable($style_file) ? $version . '.' . filemtime($style_file) : $version;
+    $script_ver   = is_readable($script_file) ? $version . '.' . filemtime($script_file) : $version;
 
     wp_enqueue_style(
         'smartwerk-style',
         get_stylesheet_uri(),
         [],
-        $version
+        $style_ver
     );
 
     wp_enqueue_script(
         'smartwerk-theme',
         get_template_directory_uri() . '/assets/js/theme.js',
         [],
-        $version,
+        $script_ver,
         true
     );
 
