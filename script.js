@@ -238,14 +238,34 @@ function renderProducts() {
 function setupFilters() {
   const buttons = document.querySelectorAll('[data-filter]');
   if (!buttons.length) return;
-  buttons.forEach(button => button.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('is-active'));
-    button.classList.add('is-active');
-    const filter = button.dataset.filter;
-    document.querySelectorAll('.product-card').forEach(card => {
-      card.hidden = filter !== 'all' && card.dataset.category !== filter;
+
+  const countLabel = document.querySelector('[data-filter-count]');
+  const cards = [...document.querySelectorAll('[data-product-grid] .product-card')];
+
+  const applyFilter = (button) => {
+    buttons.forEach(b => {
+      b.classList.toggle('is-active', b === button);
+      b.setAttribute('aria-pressed', String(b === button));
     });
-  }));
+
+    const filter = button.dataset.filter;
+    let visible = 0;
+
+    cards.forEach(card => {
+      const show = filter === 'all' || card.dataset.category === filter;
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+
+    if (countLabel) {
+      countLabel.textContent = visible === 1 ? '1 Produkt' : `${visible} Produkte`;
+    }
+  };
+
+  buttons.forEach(button => button.addEventListener('click', () => applyFilter(button)));
+
+  const active = [...buttons].find(button => button.classList.contains('is-active')) || buttons[0];
+  if (active) applyFilter(active);
 }
 
 function setupConfigurator() {
