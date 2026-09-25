@@ -3396,3 +3396,29 @@ body[data-page="home"] .product-category{
     min-height:34px;
   }
 }
+
+
+/* WP3DPrinting handoff boundary */
+.wp3dprint-integration-shell{
+  width:100%;
+}
+
+.wp3dprint-static-preview,
+.wp3dprint-plugin-mount{
+  width:100%;
+}
+
+/*
+  IMPORTANT:
+  SmartWerk owns only the outer integration shell.
+  The real plugin markup is intentionally not styled here until its rendered
+  HTML has been inspected inside WordPress. This avoids brittle overrides
+  against plugin-internal class names.
+*/
+.wp3dprint-plugin-mount:not([hidden]){
+  min-height:280px;
+}
+
+.wp3dprint-plugin-mount:not([hidden]) + .wp3dprint-static-preview{
+  display:none;
+}
