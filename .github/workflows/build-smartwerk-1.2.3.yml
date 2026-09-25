@@ -1,0 +1,56 @@
+name: Build SmartWerk Theme 1.2.3
+
+on:
+  push:
+    branches:
+      - smartwerk-theme-1.2.3-safe
+    paths:
+      - 'wordpress-theme/smartwerk-1.2.3/**'
+      - '.github/workflows/build-smartwerk-1.2.3.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="wordpress-theme/smartwerk-1.2.3"
+          test -f "$THEME/style.css"
+          test -f "$THEME/index.php"
+          test -f "$THEME/functions.php"
+          test -f "$THEME/header.php"
+          test -f "$THEME/footer.php"
+          grep -q "Version: 1.2.3" "$THEME/style.css"
+          ! grep -q "smartwerk_performance_head" "$THEME/functions.php"
+      - name: PHP lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          find wordpress-theme/smartwerk-1.2.3 -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: JavaScript syntax check
+        shell: bash
+        run: node --check wordpress-theme/smartwerk-1.2.3/assets/js/theme.js
+      - name: Package theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd wordpress-theme
+          zip -r ../dist/smartwerk-theme-1.2.3.zip smartwerk-1.2.3 -x '*.DS_Store'
+          cd ..
+          unzip -t dist/smartwerk-theme-1.2.3.zip
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartwerk-theme-1.2.3
+          path: dist/smartwerk-theme-1.2.3.zip
+          if-no-files-found: error
+          retention-days: 30
