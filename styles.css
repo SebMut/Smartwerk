@@ -3125,3 +3125,211 @@ body[data-page="home"] .product-category{
     gap:20px;
   }
 }
+
+
+/* Mobile UX pass — knowledge, shop and configurator */
+.mobile-section-toggle{
+  display:none;
+}
+
+@media(max-width:640px){
+  /* Knowledge: progressively collapse long sections */
+  body[data-page="stl-dateien"] .mobile-section-collapsible{
+    scroll-margin-top:118px;
+  }
+
+  body[data-page="stl-dateien"] .mobile-section-collapsible > .site-shell > .section-head{
+    margin-bottom:14px;
+  }
+
+  body[data-page="stl-dateien"] .mobile-section-toggle{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    width:100%;
+    min-height:46px;
+    margin:0 0 4px;
+    padding:0 13px 0 15px;
+    border:1px solid #dbe3e5;
+    border-radius:11px;
+    background:#fff;
+    color:#3d5055;
+    font-size:.75rem;
+    font-weight:850;
+    text-align:left;
+  }
+
+  body[data-page="stl-dateien"] .mobile-section-toggle b{
+    display:grid;
+    place-items:center;
+    width:28px;
+    height:28px;
+    flex:0 0 28px;
+    border-radius:8px;
+    background:#eef7f7;
+    color:var(--primary);
+    font-size:1rem;
+  }
+
+  body[data-page="stl-dateien"] .mobile-section-collapsible.is-collapsed > .site-shell > :not(.section-head):not(.mobile-section-toggle){
+    display:none !important;
+  }
+
+  body[data-page="stl-dateien"] .section{
+    padding-top:48px;
+    padding-bottom:48px;
+  }
+
+  body[data-page="stl-dateien"] .section-head .lead{
+    font-size:.93rem;
+  }
+
+  /* Keep topic navigation compact on phones */
+  body[data-page="stl-dateien"] .knowledge-nav-inner{
+    scroll-snap-type:x proximity;
+    padding-top:8px;
+    padding-bottom:8px;
+  }
+
+  body[data-page="stl-dateien"] .knowledge-nav a{
+    scroll-snap-align:start;
+    min-height:36px;
+    display:inline-flex;
+    align-items:center;
+  }
+
+  /* Shop: touch-friendly filter controls without stealing vertical space */
+  body[data-page="shop"] .shop-filter-panel{
+    overflow:hidden;
+  }
+
+  body[data-page="shop"] .filter-row{
+    scroll-snap-type:x proximity;
+    padding-bottom:2px;
+  }
+
+  body[data-page="shop"] .filter-button{
+    min-height:44px;
+    padding-inline:15px;
+    scroll-snap-align:start;
+  }
+
+  body[data-page="shop"] .price-filter-head{
+    margin-bottom:8px;
+  }
+
+  body[data-page="shop"] .price-range-wrap{
+    height:34px;
+  }
+
+  body[data-page="shop"] .price-range{
+    height:34px;
+  }
+
+  body[data-page="shop"] .price-range::-webkit-slider-thumb{
+    width:22px;
+    height:22px;
+    margin-top:-8.5px;
+  }
+
+  body[data-page="shop"] .product-grid{
+    gap:15px;
+  }
+
+  body[data-page="shop"] .product-button{
+    min-height:44px;
+  }
+
+  body[data-page="shop"] .product-button b{
+    width:34px;
+    height:34px;
+  }
+
+  /* Configurator: upload first, then a shorter preview, then settings */
+  body[data-page="3d-druck"] #konfigurator{
+    padding-top:48px;
+    padding-bottom:52px;
+  }
+
+  body[data-page="3d-druck"] .config-shell{
+    border-radius:15px;
+  }
+
+  body[data-page="3d-druck"] .config-bar{
+    align-items:flex-start;
+    gap:4px;
+    padding:11px 13px;
+  }
+
+  body[data-page="3d-druck"] .config-bar > span:last-child{
+    display:none;
+  }
+
+  body[data-page="3d-druck"] .viewer-panel{
+    display:flex;
+    flex-direction:column;
+    padding:13px;
+  }
+
+  body[data-page="3d-druck"] .upload-zone{
+    order:-1;
+    min-height:74px;
+    margin:0 0 12px;
+    padding:13px;
+    display:grid;
+    place-items:center;
+    gap:3px;
+  }
+
+  body[data-page="3d-druck"] .upload-zone strong{
+    font-size:.8rem;
+  }
+
+  body[data-page="3d-druck"] .upload-zone span{
+    font-size:.7rem;
+  }
+
+  body[data-page="3d-druck"] .viewer-stage{
+    min-height:230px;
+    border-radius:13px;
+  }
+
+  body[data-page="3d-druck"] .model-cube{
+    width:145px;
+    height:145px;
+  }
+
+  body[data-page="3d-druck"] .config-panel{
+    padding:18px 15px;
+  }
+
+  body[data-page="3d-druck"] .config-panel h3{
+    margin-bottom:16px;
+  }
+
+  body[data-page="3d-druck"] .field select{
+    min-height:46px;
+  }
+
+  body[data-page="3d-druck"] .swatch{
+    width:38px;
+    height:38px;
+  }
+
+  body[data-page="3d-druck"] .price-box{
+    display:grid;
+    gap:13px;
+    align-items:stretch;
+  }
+
+  body[data-page="3d-druck"] .price-box .button{
+    width:100%;
+  }
+
+  body[data-page="3d-druck"] .viewer-note{
+    left:12px;
+    bottom:11px;
+    font-size:.67rem;
+  }
+}
