@@ -4802,3 +4802,131 @@ body.smartwerk-theme .smartwerk-commerce-page .entry-content{width:100%}
   body.smartwerk-theme .sw-shop-custom-inner{padding:24px}
   body.smartwerk-theme .smartwerk-gutenberg-section{padding:38px 0 58px}
 }
+
+
+/* Legacy public homepage 1628 — transitional only until 1981 becomes front page. */
+body.smartwerk-theme .sw-home-hero{padding:36px 0 30px;background:#fff}
+body.smartwerk-theme .sw-home-grid{
+  display:grid;grid-template-columns:minmax(0,.9fr) minmax(520px,1.1fr);
+  gap:36px;align-items:center
+}
+body.smartwerk-theme .sw-home-copy h1{
+  max-width:720px;margin:12px 0 18px;font-size:clamp(2.45rem,4.05vw,4.15rem);
+  line-height:1.01;font-weight:800
+}
+body.smartwerk-theme .sw-home-copy h1 strong{color:var(--primary)}
+body.smartwerk-theme .sw-hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+body.smartwerk-theme .sw-btn-shop{border-color:#f0b77d;background:#fff8f0;color:#9a4c08}
+body.smartwerk-theme .sw-hero-textlink{
+  display:inline-block;margin-top:14px;color:var(--primary);font-size:.82rem;font-weight:800
+}
+body.smartwerk-theme .sw-hero-proof{
+  display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:18px;color:#526166;font-size:.75rem;font-weight:700
+}
+body.smartwerk-theme .sw-hero-visual{
+  position:relative;display:block;min-height:390px;overflow:hidden;border-radius:22px;
+  background:#e9eff0 url('https://www.smartwerk.art/wp-content/uploads/2026/09/167805C5-905F-4A85-A00A-7E9436D84053.png') center/cover no-repeat
+}
+body.smartwerk-theme .sw-hero-visual::after{
+  content:'';position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(7,20,22,.72))
+}
+body.smartwerk-theme .sw-hero-visual-overlay{
+  position:absolute;z-index:2;left:24px;right:24px;bottom:22px;color:#fff
+}
+body.smartwerk-theme .sw-hero-visual-kicker{
+  display:block;margin-bottom:7px;font-size:.68rem;font-weight:900;letter-spacing:.07em;text-transform:uppercase
+}
+body.smartwerk-theme .sw-hero-visual-overlay strong{display:block;max-width:520px;font-size:1.35rem;line-height:1.2}
+body.smartwerk-theme .sw-hero-visual-overlay span:last-child{display:block;margin-top:5px;font-size:.8rem;opacity:.9}
+
+body.smartwerk-theme .sw-trust-strip{
+  border-top:1px solid #eef0f1;border-bottom:1px solid #eef0f1;background:#fff
+}
+body.smartwerk-theme .sw-trust-row{display:grid;grid-template-columns:repeat(4,1fr)}
+body.smartwerk-theme .sw-trust-item{padding:22px 20px;border-right:1px solid #eef0f1}
+body.smartwerk-theme .sw-trust-item:last-child{border-right:0}
+body.smartwerk-theme .sw-trust-item strong{display:block;font-size:.9rem}
+body.smartwerk-theme .sw-trust-item span{display:block;margin-top:3px;color:var(--muted);font-size:.77rem}
+
+body.smartwerk-theme .sw-featured-shop{padding:74px 0;background:var(--soft)}
+body.smartwerk-theme .sw-featured-shop>.sw-shell{display:block}
+body.smartwerk-theme .sw-featured-shop-head{
+  display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:28px
+}
+body.smartwerk-theme .sw-featured-shop-head h2{margin:8px 0 10px;font-size:clamp(2rem,3.4vw,3.35rem)}
+body.smartwerk-theme .sw-featured-shop-head p{color:var(--muted)}
+body.smartwerk-theme .sw-shop-all{color:var(--primary);font-weight:800}
+body.smartwerk-theme .sw-product-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px
+}
+body.smartwerk-theme .sw-product-card{
+  display:flex;flex-direction:column;min-width:0;overflow:hidden;border:1px solid #dce3e5;
+  border-radius:16px;background:#fff;box-shadow:0 6px 20px rgba(32,33,36,.045)
+}
+body.smartwerk-theme .sw-product-image{overflow:hidden;background:#f1f3f4}
+body.smartwerk-theme .sw-product-image img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+body.smartwerk-theme .sw-product-body{display:flex;flex:1;flex-direction:column;padding:16px}
+body.smartwerk-theme .sw-product-tag{
+  color:var(--primary);font-size:.67rem;font-weight:900;letter-spacing:.04em;text-transform:uppercase
+}
+body.smartwerk-theme .sw-product-body h3{margin:8px 0 16px;font-size:1rem}
+body.smartwerk-theme .sw-product-meta{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;
+  color:#536166;font-size:.8rem
+}
+body.smartwerk-theme .sw-featured-shop-footer{margin-top:28px}
+
+body.smartwerk-theme .sw-config-section{background:#fff}
+body.smartwerk-theme .sw-config-intro{
+  display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:24px
+}
+body.smartwerk-theme .sw-config-trust{color:#4e6064;font-size:.78rem;font-weight:800}
+body.smartwerk-theme .sw-config-steps{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px
+}
+body.smartwerk-theme .sw-config-step{
+  display:flex;align-items:center;gap:10px;padding:14px;border:1px solid var(--line);
+  border-radius:12px;background:#fff
+}
+body.smartwerk-theme .sw-config-step>span{
+  display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:50%;
+  background:#e9f5f6;color:var(--primary);font-size:.75rem;font-weight:900
+}
+body.smartwerk-theme .sw-config-step strong{display:block;font-size:.82rem}
+body.smartwerk-theme .sw-config-step small{display:block;margin-top:2px;color:var(--muted);font-size:.69rem}
+
+body.smartwerk-theme .sw-choice-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px
+}
+body.smartwerk-theme .sw-choice{
+  padding:26px;border:1px solid var(--line);border-radius:16px;background:#fff
+}
+body.smartwerk-theme .sw-index{
+  display:block;margin-bottom:18px;color:var(--primary);font-size:.72rem;
+  font-weight:900;letter-spacing:.07em
+}
+body.smartwerk-theme .sw-choice p{color:var(--muted)}
+body.smartwerk-theme .sw-choice a{display:inline-block;margin-top:18px;color:var(--primary);font-weight:800}
+
+@media(max-width:980px){
+  body.smartwerk-theme .sw-home-grid{grid-template-columns:1fr}
+  body.smartwerk-theme .sw-hero-visual{min-height:320px}
+  body.smartwerk-theme .sw-trust-row{grid-template-columns:1fr 1fr}
+  body.smartwerk-theme .sw-product-grid,
+  body.smartwerk-theme .sw-choice-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.smartwerk-theme .sw-config-intro{display:block}
+  body.smartwerk-theme .sw-config-trust{margin-top:10px}
+  body.smartwerk-theme .sw-config-steps{grid-template-columns:1fr 1fr}
+}
+@media(max-width:640px){
+  body.smartwerk-theme .sw-home-hero{padding:14px 0 20px}
+  body.smartwerk-theme .sw-home-copy h1{font-size:clamp(2rem,9.4vw,2.85rem)}
+  body.smartwerk-theme .sw-hero-actions{display:grid;grid-template-columns:1fr}
+  body.smartwerk-theme .sw-hero-visual{min-height:245px}
+  body.smartwerk-theme .sw-trust-row,
+  body.smartwerk-theme .sw-product-grid,
+  body.smartwerk-theme .sw-choice-grid,
+  body.smartwerk-theme .sw-config-steps{grid-template-columns:1fr}
+  body.smartwerk-theme .sw-featured-shop-head{display:block}
+  body.smartwerk-theme .sw-shop-all{display:inline-block;margin-top:14px}
+}
