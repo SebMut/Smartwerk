@@ -206,6 +206,53 @@
       </article>
     </div>
 
+    <div class="visual-knowledge-block">
+      <div class="visual-knowledge-head">
+        <div>
+          <span class="knowledge-tag">Schnellvergleich</span>
+          <h3>PLA, PETG oder TPU?</h3>
+        </div>
+        <p>Eine schnelle Orientierung nach typischem Einsatzzweck – keine starre Qualitätswertung.</p>
+      </div>
+
+      <div class="material-compare" aria-label="Visueller Vergleich von PLA, PETG und TPU">
+        <div class="material-compare-head">
+          <span>Eigenschaft</span>
+          <strong class="material-label material-label-pla">PLA</strong>
+          <strong class="material-label material-label-petg">PETG</strong>
+          <strong class="material-label material-label-tpu">TPU</strong>
+        </div>
+
+        <div class="material-compare-row">
+          <span>Einfach zu drucken</span>
+          <div class="rating-dots" aria-label="PLA: sehr geeignet"><i></i><i></i><i></i><i></i></div>
+          <div class="rating-dots" aria-label="PETG: gut geeignet"><i></i><i></i><i></i><i class="off"></i></div>
+          <div class="rating-dots" aria-label="TPU: anspruchsvoller"><i></i><i></i><i class="off"></i><i class="off"></i></div>
+        </div>
+
+        <div class="material-compare-row">
+          <span>Funktionsteile</span>
+          <div class="rating-dots" aria-label="PLA: geeignet"><i></i><i></i><i class="off"></i><i class="off"></i></div>
+          <div class="rating-dots" aria-label="PETG: sehr geeignet"><i></i><i></i><i></i><i></i></div>
+          <div class="rating-dots" aria-label="TPU: geeignet für flexible Funktionsteile"><i></i><i></i><i></i><i class="off"></i></div>
+        </div>
+
+        <div class="material-compare-row">
+          <span>Flexibilität</span>
+          <div class="rating-dots" aria-label="PLA: gering"><i></i><i class="off"></i><i class="off"></i><i class="off"></i></div>
+          <div class="rating-dots" aria-label="PETG: etwas flexibel"><i></i><i></i><i class="off"></i><i class="off"></i></div>
+          <div class="rating-dots" aria-label="TPU: sehr flexibel"><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="material-compare-row">
+          <span>Outdoor-Einsatz</span>
+          <div class="rating-dots" aria-label="PLA: eher ungeeignet"><i></i><i class="off"></i><i class="off"></i><i class="off"></i></div>
+          <div class="rating-dots" aria-label="PETG: gut geeignet"><i></i><i></i><i></i><i></i></div>
+          <div class="rating-dots" aria-label="TPU: abhängig vom Einsatzzweck"><i></i><i></i><i></i><i class="off"></i></div>
+        </div>
+      </div>
+    </div>
+
     <div class="knowledge-tip">
       <strong>Filament trocken lagern</strong>
       <p>Viele Filamente nehmen Feuchtigkeit aus der Luft auf. Feuchtes Material kann zu Blasen, Knacken, unsauberen Oberflächen und schlechter Schichthaftung führen.</p>
@@ -248,6 +295,50 @@
       <div class="settings-row"><strong>Lüfter</strong><span>Kühlung der Schichten</span><span>PLA meist stärker kühlen als technische Materialien</span></div>
       <div class="settings-row"><strong>Support</strong><span>Druckbarkeit von Überhängen</span><span>Nur dort einsetzen, wo nötig</span></div>
     </div>
+
+    <div class="print-visuals">
+      <article class="print-visual-card">
+        <div class="visual-card-copy">
+          <span class="knowledge-tag">Layerhöhe</span>
+          <h3>Feiner oder schneller?</h3>
+          <p>Kleinere Schichten können Oberflächen und Details feiner wirken lassen. Größere Schichten reduzieren meist die Anzahl der benötigten Layer.</p>
+        </div>
+        <div class="layer-demo" aria-label="Schematischer Vergleich verschiedener Layerhöhen">
+          <div class="layer-sample">
+            <div class="layer-stack layer-stack-fine"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <strong>fein</strong>
+            <span>mehr, dünnere Schichten</span>
+          </div>
+          <div class="layer-arrow" aria-hidden="true">→</div>
+          <div class="layer-sample">
+            <div class="layer-stack layer-stack-coarse"><i></i><i></i><i></i><i></i></div>
+            <strong>gröber</strong>
+            <span>weniger, stärkere Schichten</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="print-visual-card">
+        <div class="visual-card-copy">
+          <span class="knowledge-tag">Infill</span>
+          <h3>Innenstruktur statt Vollmaterial.</h3>
+          <p>Infill füllt das Bauteil nicht einfach massiv aus. Muster und Dichte beeinflussen Materialverbrauch, Gewicht, Druckzeit und mechanisches Verhalten.</p>
+        </div>
+        <div class="infill-demo" aria-label="Schematischer Vergleich von wenig und mehr Infill">
+          <div class="infill-sample">
+            <div class="infill-box infill-low"></div>
+            <strong>weniger Infill</strong>
+            <span>leichter · weniger Material</span>
+          </div>
+          <div class="layer-arrow" aria-hidden="true">→</div>
+          <div class="infill-sample">
+            <div class="infill-box infill-high"></div>
+            <strong>mehr Infill</strong>
+            <span>dichter · mehr Material</span>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -257,6 +348,42 @@
       <span class="eyebrow">06 · Zubehör</span>
       <h2>Nützliches Zubehör rund um den 3D-Druck.</h2>
       <p class="lead">Nicht alles ist zwingend nötig. Einige Dinge machen den Alltag aber deutlich einfacher und reproduzierbarer.</p>
+    </div>
+
+    <div class="nozzle-compare">
+      <div class="nozzle-compare-copy">
+        <span class="knowledge-tag">Düsendurchmesser</span>
+        <h3>0,4 mm oder 0,6 mm?</h3>
+        <p>Der Düsendurchmesser beeinflusst Linienbreite, Detaildarstellung und möglichen Materialdurchsatz. Welche Größe sinnvoll ist, hängt vom Modell und Einsatzzweck ab.</p>
+      </div>
+
+      <div class="nozzle-cards">
+        <article class="nozzle-card">
+          <div class="nozzle-graphic nozzle-graphic-small" aria-hidden="true"><span></span></div>
+          <div>
+            <strong>0,4 mm</strong>
+            <span>Allrounder</span>
+          </div>
+          <ul>
+            <li>guter Kompromiss aus Detail und Tempo</li>
+            <li>für viele Standardprofile geeignet</li>
+            <li>feinere Strukturen leichter darstellbar</li>
+          </ul>
+        </article>
+
+        <article class="nozzle-card nozzle-card-accent">
+          <div class="nozzle-graphic nozzle-graphic-large" aria-hidden="true"><span></span></div>
+          <div>
+            <strong>0,6 mm</strong>
+            <span>mehr Material pro Bahn</span>
+          </div>
+          <ul>
+            <li>breitere Linien möglich</li>
+            <li>interessant für größere Funktionsteile</li>
+            <li>kleinste Details können gröber ausfallen</li>
+          </ul>
+        </article>
+      </div>
     </div>
 
     <div class="knowledge-grid">
