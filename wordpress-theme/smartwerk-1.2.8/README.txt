@@ -1,0 +1,125 @@
+SmartWerk WordPress Theme 1.2.8
+================================
+
+Eigenständiges SmartWerk-Theme auf Basis des bestätigten GitHub-Masters.
+Kein Kiosko-Child-Theme.
+
+Enthalten
+---------
+- vollständiger aktueller SmartWerk-Master-CSS-Stand
+- zentraler SmartWerk Header und Footer
+- korrekte WordPress-Menüstruktur
+- responsive Desktop/Tablet/Mobile-Navigation
+- WooCommerce Theme Support
+- WooCommerce Classic + WooCommerce Blocks Grundintegration
+- echter WooCommerce Warenkorb-Link und dynamischer Artikelzähler
+- Gutenberg/WordPress Seiteninhalte bleiben bearbeitbar
+- Übergangsschutz gegen alte eingebettete sw-header/sw-footer
+- WP3DPrinting wird nur außen eingebettet; keine geratenen Plugin-internen CSS-Hacks
+- Wissen-&-STL-Mobile-Accordions
+
+WP3DPrinting
+------------
+Bestehender SmartWerk-Shortcode:
+[3dprint product_id="783" mode="single" compatibility_mode="true"]
+
+Wichtig
+-------
+Das Theme enthält die Darstellungs- und Integrationsschicht. Die alten
+WordPress-Seiteninhalte müssen anschließend mit Easy MCP AI/WPWriter auf den
+neuen GitHub-Master-Inhalt migriert werden. Das Theme löscht keine Inhalte.
+
+Die alten page-level SmartWerk Header/Footer werden während der Übergangsphase
+nur ausgeblendet, damit der neue globale Theme-Header/Footer nicht doppelt
+erscheint.
+
+Installation
+------------
+1. WordPress > Design > Themes > Theme hinzufügen > Theme hochladen
+2. smartwerk-theme-1.2.8.zip auswählen
+3. Installieren
+4. Vor der Live-Aktivierung in Preview/Staging prüfen
+5. Hauptnavigation dem Theme-Ort "Hauptnavigation" zuweisen
+6. WooCommerce und WP3DPrinting aktiv lassen
+
+Hinweis zu Schriftarten
+-----------------------
+Der bestätigte Master verwendet derzeit Manrope über Google Fonts. Diese
+Referenz wurde für visuelle Gleichheit unverändert übernommen. Vor dem
+endgültigen Livegang kann die Schrift datenschutzorientiert lokalisiert oder
+durch einen System-Font-Stack ersetzt werden.
+
+
+SmartWerk 1.2.8 migration layer
+-------------------------------
+- Full current GitHub master CSS remains the base layer.
+- Existing sw-* transfer pages receive a complete layout compatibility bridge.
+- Gutenberg Contact/Legal pages receive a centered SmartWerk shell.
+- WooCommerce Cart/Checkout Blocks remain native.
+- WP3DPrinting internals remain untouched.
+
+SmartWerk 1.2.8 proof-layout fix
+-------------------------------
+- prevents the "Echt bei SmartWerk" copy column from collapsing
+- stacks copy and gallery earlier on medium desktop/tablet widths
+- preserves the existing mobile gallery layout
+
+
+SmartWerk 1.2.8 safe performance baseline
+-----------------------------------------
+- based on stable 1.2.1 theme code
+- no forced hero preload
+- no additional script strategy changes
+- homepage image lazy-loading remains in page content
+- homepage hero image uses the WordPress image CDN
+
+
+SmartWerk 1.2.8 mobile polish
+-----------------------------
+- keeps the SmartWerk logo compact and visible in the sticky mobile header
+- prevents the logo from overflowing into the homepage hero
+- stacks all three homepage hero CTAs at equal full width on phones
+- leaves desktop/tablet styling unchanged
+
+
+SmartWerk 1.2.8 performance
+---------------------------
+- based directly on SmartWerk 1.2.4
+- removes Google Fonts CSS @import and loads Manrope asynchronously
+- adds font preconnect hints
+- removes WordPress emoji frontend overhead
+- removes unused Gutenberg/WooCommerce frontend assets from the homepage only
+- preserves WooCommerce assets on shop, product, cart and checkout pages
+- refreshes the cached header cart count via WooCommerce Store API when idle
+- uses content-visibility for below-the-fold homepage sections
+- does not alter WP3DPrinting internals
+
+
+SmartWerk 1.2.8 product detail pages
+------------------------------------
+- SmartWerk two-column product detail layout for desktop
+- responsive one-column product layout on tablet/mobile
+- readable long product titles and cleaner variation controls
+- optimized gallery display size via WordPress medium_large
+- small gallery thumbnails via WordPress thumbnail size
+- primary product image: eager + fetchpriority high
+- additional gallery images: native lazy loading + async decoding
+- responsive sizes hint for the product gallery
+- full original remains available for WooCommerce zoom/lightbox
+- tabs and related products use content-visibility below the fold
+- removes unused Gutenberg/Blocks CSS on classic product pages only
+
+
+SmartWerk 1.2.8 product polish
+------------------------------
+- reduces desktop product gallery to about 430px
+- increases long product description font size and line height
+- adds a top-right "15% günstiger wie auf Etsy" badge on the nine confirmed Etsy-import products
+- badge is intentionally not shown on services or unverified legacy products
+- keeps 1.2.6 product-image lazy/eager strategy unchanged
+
+
+SmartWerk 1.2.8 badge wording
+-----------------------------
+- changes the Etsy comparison badge to "15 % unter meinem Etsy-Preis"
+- no layout, pricing or product logic changes
