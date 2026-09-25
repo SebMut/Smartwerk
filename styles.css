@@ -3333,3 +3333,66 @@ body[data-page="home"] .product-category{
     font-size:.67rem;
   }
 }
+
+
+/* WP3DPrinting integration shell */
+.plugin-capabilities{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:-8px 0 20px;
+}
+
+.plugin-capabilities span{
+  display:inline-flex;
+  align-items:center;
+  min-height:32px;
+  padding:0 10px;
+  border:1px solid #d9e5e6;
+  border-radius:999px;
+  background:#f5fafa;
+  color:#4e6569;
+  font-size:.67rem;
+  font-weight:800;
+}
+
+.plugin-capabilities span::before{
+  content:'✓';
+  margin-right:6px;
+  color:var(--primary);
+  font-weight:900;
+}
+
+.wp3dprint-integration-shell{
+  position:relative;
+}
+
+/*
+  WordPress handoff:
+  WP3DPrinting shortcode/product output belongs inside this wrapper.
+  Keep SmartWerk spacing and outer shell styles; avoid relying on plugin-internal
+  class names until the final WordPress integration is available.
+*/
+.wp3dprint-integration-shell > .config-shell{
+  margin:0;
+}
+
+@media(max-width:640px){
+  .plugin-capabilities{
+    flex-wrap:nowrap;
+    width:calc(100vw - 28px);
+    margin-right:-14px;
+    padding-right:14px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+
+  .plugin-capabilities::-webkit-scrollbar{
+    display:none;
+  }
+
+  .plugin-capabilities span{
+    flex:0 0 auto;
+    min-height:34px;
+  }
+}
