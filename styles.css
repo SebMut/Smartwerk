@@ -312,6 +312,21 @@ p{margin:0}
 .subhero .site-shell{max-width:980px}
 .subhero h1{font-size:clamp(2.7rem,5vw,4.9rem);max-width:820px}
 .subhero .lead{font-size:1.05rem}
+
+/* Full content width for main SmartWerk subpage heroes */
+body[data-page="3d-druck"] .subhero .site-shell,
+body[data-page="individuell"] .subhero .site-shell,
+body[data-page="projekte"] .subhero .site-shell,
+body[data-page="stl-dateien"] .subhero .site-shell{
+  max-width:var(--max);
+}
+
+body[data-page="3d-druck"] .subhero h1,
+body[data-page="individuell"] .subhero h1,
+body[data-page="projekte"] .subhero h1,
+body[data-page="stl-dateien"] .subhero h1{
+  max-width:100%;
+}
 .breadcrumb{margin-bottom:16px;color:#7d878b;font-size:.75rem}
 .breadcrumb a{color:var(--primary)}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:42px;align-items:start}
