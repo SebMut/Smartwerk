@@ -195,6 +195,19 @@ function showToast(message) {
   showToast.timer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
 }
 
+function getProductPriceRange(priceText) {
+  const values = [...String(priceText).matchAll(/\d+(?:[.,]\d+)?/g)]
+    .map(match => Number(match[0].replace(',', '.')))
+    .filter(Number.isFinite);
+
+  if (!values.length) return null;
+
+  return {
+    min: Math.min(...values),
+    max: Math.max(...values)
+  };
+}
+
 function productCard(product) {
   const categoryLabel = {
     sport: 'Sport & Training',
@@ -204,7 +217,10 @@ function productCard(product) {
   }[product.category] || 'SmartWerk Produkt';
 
   return `
-    <article class="product-card" data-category="${product.category}">
+    <article class="product-card" data-category="${product.category}" ${(() => {
+      const range = getProductPriceRange(product.price);
+      return range ? `data-price-min="${range.min}" data-price-max="${range.max}"` : 'data-price-custom="true"';
+    })()}>
       <div class="product-image-wrap">
         <img class="product-image" src="${product.image}" alt="${product.name}" loading="lazy">
         <span class="product-badge">${product.badge}</span>
@@ -236,23 +252,57 @@ function renderProducts() {
 }
 
 function setupFilters() {
-  const buttons = document.querySelectorAll('[data-filter]');
+  const buttons = [...document.querySelectorAll('[data-filter]')];
   if (!buttons.length) return;
 
   const countLabel = document.querySelector('[data-filter-count]');
   const cards = [...document.querySelectorAll('[data-product-grid] .product-card')];
+  const minInput = document.querySelector('[data-price-min]');
+  const maxInput = document.querySelector('[data-price-max]');
+  const minOutput = document.querySelector('[data-price-min-output]');
+  const maxOutput = document.querySelector('[data-price-max-output]');
+  const priceTrack = document.querySelector('[data-price-track]');
 
-  const applyFilter = (button) => {
-    buttons.forEach(b => {
-      b.classList.toggle('is-active', b === button);
-      b.setAttribute('aria-pressed', String(b === button));
-    });
+  let activeFilter = buttons.find(button => button.classList.contains('is-active'))?.dataset.filter || 'all';
 
-    const filter = button.dataset.filter;
+  const formatPrice = value => `${Math.round(Number(value))} €`;
+
+  const updatePriceTrack = () => {
+    if (!minInput || !maxInput || !priceTrack) return;
+
+    const min = Number(minInput.min);
+    const max = Number(minInput.max);
+    const low = Number(minInput.value);
+    const high = Number(maxInput.value);
+    const lowPct = ((low - min) / (max - min)) * 100;
+    const highPct = ((high - min) / (max - min)) * 100;
+
+    priceTrack.style.setProperty('--price-low', `${lowPct}%`);
+    priceTrack.style.setProperty('--price-high', `${highPct}%`);
+
+    if (minOutput) minOutput.textContent = formatPrice(low);
+    if (maxOutput) maxOutput.textContent = formatPrice(high);
+  };
+
+  const applyFilters = () => {
+    const selectedMin = minInput ? Number(minInput.value) : 0;
+    const selectedMax = maxInput ? Number(maxInput.value) : Infinity;
     let visible = 0;
 
     cards.forEach(card => {
-      const show = filter === 'all' || card.dataset.category === filter;
+      const categoryMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
+
+      const customPrice = card.dataset.priceCustom === 'true';
+      const productMin = Number(card.dataset.priceMin);
+      const productMax = Number(card.dataset.priceMax);
+      const priceMatch = customPrice || (
+        Number.isFinite(productMin) &&
+        Number.isFinite(productMax) &&
+        productMax >= selectedMin &&
+        productMin <= selectedMax
+      );
+
+      const show = categoryMatch && priceMatch;
       card.hidden = !show;
       if (show) visible += 1;
     });
@@ -260,12 +310,46 @@ function setupFilters() {
     if (countLabel) {
       countLabel.textContent = visible === 1 ? '1 Produkt' : `${visible} Produkte`;
     }
+
+    updatePriceTrack();
   };
 
-  buttons.forEach(button => button.addEventListener('click', () => applyFilter(button)));
+  buttons.forEach(button => button.addEventListener('click', () => {
+    activeFilter = button.dataset.filter;
 
-  const active = [...buttons].find(button => button.classList.contains('is-active')) || buttons[0];
-  if (active) applyFilter(active);
+    buttons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-pressed', String(active));
+    });
+
+    applyFilters();
+  }));
+
+  const syncRanges = changed => {
+    if (!minInput || !maxInput) return;
+
+    let low = Number(minInput.value);
+    let high = Number(maxInput.value);
+    const minimumGap = Number(minInput.step) || 1;
+
+    if (high - low < minimumGap) {
+      if (changed === minInput) {
+        low = Math.max(Number(minInput.min), high - minimumGap);
+        minInput.value = String(low);
+      } else {
+        high = Math.min(Number(maxInput.max), low + minimumGap);
+        maxInput.value = String(high);
+      }
+    }
+
+    applyFilters();
+  };
+
+  minInput?.addEventListener('input', () => syncRanges(minInput));
+  maxInput?.addEventListener('input', () => syncRanges(maxInput));
+
+  applyFilters();
 }
 
 function setupConfigurator() {
