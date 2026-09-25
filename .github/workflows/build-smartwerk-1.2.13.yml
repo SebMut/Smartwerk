@@ -1,0 +1,55 @@
+name: Build SmartWerk Theme 1.2.13
+
+on:
+  push:
+    branches:
+      - smartwerk-theme-1.2.13-staffel-personalization
+    paths:
+      - 'wordpress-theme/smartwerk-1.2.13/**'
+      - '.github/workflows/build-smartwerk-1.2.13.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="wordpress-theme/smartwerk-1.2.13"
+          test -f "$THEME/style.css"
+          test -f "$THEME/functions.php"
+          test -f "$THEME/assets/js/theme.js"
+          grep -q "Version: 1.2.13" "$THEME/style.css"
+          grep -q "woocommerce_is_sold_individually" "$THEME/functions.php"
+          grep -q "Personalisierung / Wunschtext" "$THEME/assets/js/theme.js"
+      - name: PHP lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          find wordpress-theme/smartwerk-1.2.13 -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: JavaScript syntax check
+        shell: bash
+        run: node --check wordpress-theme/smartwerk-1.2.13/assets/js/theme.js
+      - name: Package theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd wordpress-theme
+          zip -r ../dist/smartwerk-theme-1.2.13.zip smartwerk-1.2.13 -x '*.DS_Store'
+          cd ..
+          unzip -t dist/smartwerk-theme-1.2.13.zip
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartwerk-theme-1.2.13
+          path: dist/smartwerk-theme-1.2.13.zip
+          if-no-files-found: error
+          retention-days: 30
