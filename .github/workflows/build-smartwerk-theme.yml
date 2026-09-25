@@ -1,0 +1,134 @@
+name: Build SmartWerk Theme 1.1.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/build-smartwerk-theme.yml'
+      - 'wordpress-theme/smartwerk-1.1.0/**'
+      - 'styles.css'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify complete master CSS and theme structure
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json
+
+          master = Path('styles.css').read_text(encoding='utf-8')
+          theme = Path('wordpress-theme/smartwerk-1.1.0/style.css').read_text(encoding='utf-8')
+
+          required_files = [
+              'style.css',
+              'functions.php',
+              'header.php',
+              'footer.php',
+              'front-page.php',
+              'page.php',
+              'index.php',
+              'woocommerce.php',
+              '404.php',
+              'theme.json',
+              'assets/js/theme.js',
+              'README.txt',
+          ]
+
+          root = Path('wordpress-theme/smartwerk-1.1.0')
+          missing_files = [f for f in required_files if not (root / f).is_file()]
+          assert not missing_files, f'Missing theme files: {missing_files}'
+
+          assert master in theme, 'Full GitHub master CSS is not embedded verbatim in theme style.css'
+
+          required_selectors = [
+              '.home-offer-grid',
+              '.home-proof-layout',
+              '.price-filter',
+              '.price-range',
+              '.case-study',
+              '.project-proof-note',
+              '.knowledge-overview',
+              '.visual-knowledge-block',
+              '.editorial-recommendation',
+              '.recommendation-section',
+              '.plugin-capabilities',
+              '.wp3dprint-integration-shell',
+              '.material-palette-list',
+              '.legal-source-note',
+              '.footer-main',
+              '.mobile-section-toggle',
+              '.wc-block-cart',
+              '.wc-block-checkout',
+              '.desktop-menu',
+          ]
+          missing_selectors = [s for s in required_selectors if s not in theme]
+          assert not missing_selectors, f'Missing critical selectors: {missing_selectors}'
+
+          header = (root / 'header.php').read_text(encoding='utf-8')
+          assert '<ul class="desktop-menu">%3$s</ul>' in header, 'WordPress menu wrapper is not valid'
+          assert 'wp_head();' in header
+          assert 'wp_body_open();' in header
+
+          footer = (root / 'footer.php').read_text(encoding='utf-8')
+          assert 'wp_footer();' in footer
+
+          functions = (root / 'functions.php').read_text(encoding='utf-8')
+          for marker in [
+              "add_theme_support('woocommerce')",
+              'woocommerce_add_to_cart_fragments',
+              'wc_get_cart_url',
+              "register_nav_menus",
+          ]:
+              assert marker in functions, f'Missing WordPress/WooCommerce marker: {marker}'
+
+          print(json.dumps({
+              'master_chars': len(master),
+              'master_lines': len(master.splitlines()),
+              'theme_chars': len(theme),
+              'required_files': len(required_files),
+              'critical_selectors': len(required_selectors),
+          }, ensure_ascii=False, indent=2))
+          PY
+
+      - name: PHP syntax check
+        shell: bash
+        run: |
+          find wordpress-theme/smartwerk-1.1.0 -name '*.php' -print0 | while IFS= read -r -d '' file; do
+            php -l "$file"
+          done
+
+      - name: JavaScript syntax check
+        run: node --check wordpress-theme/smartwerk-1.1.0/assets/js/theme.js
+
+      - name: JSON syntax check
+        run: python3 -m json.tool wordpress-theme/smartwerk-1.1.0/theme.json >/dev/null
+
+      - name: Build installable WordPress ZIP
+        shell: bash
+        run: |
+          rm -rf build dist
+          mkdir -p build/smartwerk dist
+          cp -R wordpress-theme/smartwerk-1.1.0/. build/smartwerk/
+          cd build
+          zip -qr ../dist/smartwerk-theme-1.1.0.zip smartwerk
+          cd ..
+          unzip -l dist/smartwerk-theme-1.1.0.zip
+          test -s dist/smartwerk-theme-1.1.0.zip
+
+      - name: Upload verified theme
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartwerk-theme-1.1.0
+          path: dist/smartwerk-theme-1.1.0.zip
+          if-no-files-found: error
+          retention-days: 14
