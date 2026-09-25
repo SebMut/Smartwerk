@@ -86,7 +86,7 @@ function headerMarkup() {
           <a href="stl-dateien.html" data-nav="stl-dateien">Wissen &amp; STL</a>
         </nav>
         <div class="header-actions">
-          <a class="button button-primary header-price" href="3d-druck.html#konfigurator">Preis berechnen</a>
+          <a class="button button-primary header-price" href="3d-druck.html#konfigurator"><span>Preis berechnen</span><b aria-hidden="true">→</b></a>
           <a class="cart-button" href="warenkorb.html" aria-label="Warenkorb">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4.5h2l1.7 9.1a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4l1.2-5.3H7.1M9.5 19a1.25 1.25 0 1 0 0 .01M17.3 19a1.25 1.25 0 1 0 0 .01"/></svg>
             <span class="cart-count" data-cart-count hidden>0</span>
@@ -105,7 +105,7 @@ function headerMarkup() {
           <a href="projekte.html">Projekte</a>
           <a href="stl-dateien.html">Wissen &amp; STL</a>
           <a href="kontakt.html">Kontakt</a>
-          <a class="mobile-price" href="3d-druck.html#konfigurator">Preis berechnen</a>
+          <a class="mobile-price" href="3d-druck.html#konfigurator"><span>Preis berechnen</span><b aria-hidden="true">→</b></a>
         </div>
       </nav>
     </header>`;
