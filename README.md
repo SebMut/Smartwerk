@@ -16,7 +16,7 @@ Eigenständige mehrseitige HTML/CSS/JavaScript-Version auf Basis des Chatverlauf
 ## Gemeinsame Dateien
 - `styles.css` – kompletter Look & Responsive Design
 - `script.js` – globaler Header/Footer, Mobile-Menü, Produkte, Warenkorb und Konfigurator-Mockup
-- `assets/` – aus dem bereitgestellten Shop-Screenshot abgeleitete Produktbilder
+- `assets/product-1.jpg` und `assets/product-2.jpg` – lokale Rekonstruktionsbilder; weitere Produktbilder werden direkt aus der bestehenden SmartWerk-Mediathek geladen
 
 ## Starten
 Einfach `index.html` im Browser öffnen. Noch besser: Ordner mit einem kleinen lokalen Webserver ausliefern, z. B. über VS Code Live Server.
