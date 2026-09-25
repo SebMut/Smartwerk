@@ -2075,3 +2075,179 @@ body[data-page="stl-dateien"] .filament-head strong{
     min-height:0;
   }
 }
+
+
+/* Shop cards v2 — quieter, cleaner, more premium */
+.product-grid{
+  gap:24px;
+}
+
+.product-card{
+  border-color:#e0e5e7;
+  border-radius:17px;
+  box-shadow:0 4px 16px rgba(32,33,36,.035);
+}
+
+.product-card:hover{
+  transform:translateY(-3px);
+  border-color:#cbd5d8;
+  box-shadow:0 14px 30px rgba(32,33,36,.075);
+}
+
+.product-image-wrap{
+  background:#f2f4f5;
+}
+
+.product-image{
+  aspect-ratio:1/1;
+}
+
+.product-badge{
+  left:12px;
+  top:12px;
+  padding:6px 9px;
+  border:1px solid rgba(220,227,229,.92);
+  background:rgba(255,255,255,.88);
+  color:#536267;
+  font-size:.61rem;
+  letter-spacing:.02em;
+  box-shadow:0 3px 10px rgba(32,33,36,.05);
+}
+
+.product-body{
+  padding:18px 17px 17px;
+}
+
+.product-category{
+  display:block;
+  margin-bottom:7px;
+  color:#7a878b;
+  font-size:.64rem;
+  font-weight:850;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+
+.product-body h3{
+  min-height:2.76em;
+  margin-bottom:18px;
+  color:#263337;
+  font-size:.94rem;
+  line-height:1.38;
+  letter-spacing:-.018em;
+}
+
+.product-bottom{
+  display:grid;
+  gap:13px;
+  margin-top:auto;
+  padding-top:14px;
+  border-top:1px solid #edf0f1;
+}
+
+.product-price{
+  margin:0;
+  color:#163f43;
+  font-size:1rem;
+  font-weight:850;
+  letter-spacing:-.02em;
+}
+
+.product-meta,
+.product-shipping{
+  display:none;
+}
+
+.product-button{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  min-height:40px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:var(--primary);
+  font-size:.76rem;
+  font-weight:850;
+  text-align:left;
+}
+
+.product-button:hover{
+  color:var(--primary-dark);
+}
+
+.product-button b{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border:1px solid #cce0e2;
+  border-radius:50%;
+  background:#f3fafa;
+  font-size:.92rem;
+  transition:transform .18s ease,background .18s ease;
+}
+
+.product-button:hover b{
+  transform:translateX(2px);
+  background:#e8f5f6;
+}
+
+.shop-price-note{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-top:22px;
+  padding-top:16px;
+  border-top:1px solid #e2e7e9;
+  color:#7b8589;
+}
+
+.shop-price-note>span{
+  flex:0 0 auto;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#eef2f3;
+  color:#667378;
+  font-size:.61rem;
+  font-weight:850;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.shop-price-note p{
+  max-width:760px;
+  font-size:.68rem;
+  line-height:1.55;
+}
+
+/* Product preview on homepage stays even quieter */
+body[data-page="home"] .product-card{
+  box-shadow:none;
+}
+
+body[data-page="home"] .product-category{
+  font-size:.61rem;
+}
+
+@media(max-width:640px){
+  .product-body{
+    padding:17px 16px;
+  }
+
+  .product-body h3{
+    min-height:0;
+    margin-bottom:15px;
+  }
+
+  .shop-price-note{
+    display:grid;
+    gap:8px;
+  }
+
+  .shop-price-note>span{
+    justify-self:start;
+  }
+}
