@@ -1,5 +1,324 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wissen & STL-Dateien – SmartWerk.art</title><link rel="stylesheet" href="styles.css"><script src="script.js" defer></script></head><body data-page="stl-dateien"><div data-header-slot></div><main>
-<section class="subhero"><div class="site-shell"><div class="breadcrumb"><a href="index.html">Startseite</a> / Wissen &amp; STL</div><span class="eyebrow">Wissen &amp; STL</span><h1>Ein Modell finden, herunterladen und drucken lassen.</h1><p class="lead">Die im Verlauf festgelegten Quellen für fertige 3D-Modelle – übersichtlich und ohne den Shop zu überladen.</p></div></section>
-<section class="section section-soft"><div class="site-shell"><div class="section-head"><h2>Empfohlene STL-Downloadquellen</h2><p class="lead">Finde ein Modell, lade es herunter und lass es anschließend von SmartWerk drucken.</p></div><div class="source-grid"><a class="source-card" href="https://www.thingiverse.com/" target="_blank" rel="noopener noreferrer"><small>Große Sammlung</small><h3>Thingiverse</h3><p>Eine der größten kostenlosen Sammlungen für 3D-Druck.</p></a><a class="source-card" href="https://www.printables.com/" target="_blank" rel="noopener noreferrer"><small>Qualität &amp; Community</small><h3>Printables</h3><p>Hochwertige Modelle und getestete Designs.</p></a><a class="source-card" href="https://cults3d.com/" target="_blank" rel="noopener noreferrer"><small>Free &amp; Premium</small><h3>Cults3D</h3><p>Kreative Designs, freie und kostenpflichtige STL-Dateien.</p></a><a class="source-card" href="https://www.myminifactory.com/" target="_blank" rel="noopener noreferrer"><small>Designer Community</small><h3>MyMiniFactory</h3><p>Viele geprüfte Modelle und starke Designer-Community.</p></a><a class="source-card" href="https://makerworld.com/" target="_blank" rel="noopener noreferrer"><small>Modelle &amp; Community</small><h3>MakerWorld</h3><p>Große Community-Plattform mit vielen druckfertigen 3D-Modellen.</p></a><a class="source-card" href="https://space.snapmaker.com/" target="_blank" rel="noopener noreferrer"><small>Snapmaker Community</small><h3>Snapmaker Space</h3><p>Community-Plattform für Projekte, Modelle und kreative 3D-Druck-Ideen.</p></a></div><div class="license-note"><strong>Hinweis zur Lizenz</strong><p>Bitte prüfe vor dem Upload die Lizenzbedingungen des Modells. Nicht jede frei herunterladbare Datei darf kommerziell vervielfältigt werden.</p></div></div></section>
-<section class="section"><div class="site-shell split"><div><span class="eyebrow">Keine passende Datei?</span><h2>Dann starten wir mit deiner Idee.</h2><p class="lead">Eine vorhandene STL ist nur einer von mehreren Wegen.</p></div><div class="check-list"><div class="check-item"><div><strong>Foto oder Skizze</strong><span>Gut für Geometrie, Aufbau und grobe Maße.</span></div></div><div class="check-item"><div><strong>Vorhandenes Teil</strong><span>Als Referenz für Passform und Funktion.</span></div></div><div class="check-item"><div><strong>Beschreibung</strong><span>Wenn das Problem klar ist, kann daraus eine Lösung entwickelt werden.</span></div></div></div></div></section>
-</main><div data-footer-slot></div></body></html>
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="3D-Druck Wissen von SmartWerk: Drucker, Verfahren, Filamente, Slicer, Zubehör, Wartung und STL-Quellen verständlich erklärt.">
+  <title>3D-Druck Wissen & STL-Dateien – SmartWerk.art</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body data-page="stl-dateien">
+<div data-header-slot></div>
+<main>
+
+<section class="subhero">
+  <div class="site-shell">
+    <div class="breadcrumb"><a href="index.html">Startseite</a> / Wissen &amp; STL</div>
+    <span class="eyebrow">3D-Druck Wissen</span>
+    <h1>3D-Druck verstehen. Besser drucken.</h1>
+    <p class="lead">Von der Wahl des Druckers über Filamente, Slicer und Einstellungen bis zu Zubehör, Wartung und STL-Dateien – kompakt erklärt und praxisnah aufgebaut.</p>
+  </div>
+</section>
+
+<section class="knowledge-nav">
+  <div class="site-shell knowledge-nav-inner">
+    <a href="#drucker">Drucker</a>
+    <a href="#verfahren">Verfahren</a>
+    <a href="#filamente">Filamente</a>
+    <a href="#slicer">Slicer</a>
+    <a href="#einstellungen">Einstellungen</a>
+    <a href="#zubehoer">Zubehör</a>
+    <a href="#wartung">Wartung</a>
+    <a href="#fehler">Fehlerbilder</a>
+    <a href="#stl">STL-Quellen</a>
+  </div>
+</section>
+
+<section class="section" id="drucker">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">01 · Drucker</span>
+      <h2>Welche 3D-Drucker gibt es?</h2>
+      <p class="lead">Für den Einstieg sind vor allem FDM-Drucker verbreitet. Daneben gibt es Harz-Drucker für sehr feine Details und spezielle industrielle Verfahren.</p>
+    </div>
+
+    <div class="knowledge-grid">
+      <article class="knowledge-card">
+        <span class="knowledge-tag">FDM / FFF</span>
+        <h3>Filament-Drucker</h3>
+        <p>Ein Kunststofffaden wird geschmolzen und Schicht für Schicht aufgetragen. Ideal für Funktionsteile, Halterungen, Gehäuse, Prototypen und viele Alltagsanwendungen.</p>
+        <ul>
+          <li>vergleichsweise günstig</li>
+          <li>große Materialauswahl</li>
+          <li>gut für robuste Teile</li>
+          <li>einfacher Einstieg</li>
+        </ul>
+      </article>
+
+      <article class="knowledge-card">
+        <span class="knowledge-tag">SLA / MSLA</span>
+        <h3>Resin-Drucker</h3>
+        <p>Flüssiges Kunstharz wird mit Licht ausgehärtet. Das Verfahren liefert sehr feine Oberflächen und kleine Details.</p>
+        <ul>
+          <li>sehr hohe Detailtreue</li>
+          <li>ideal für Miniaturen</li>
+          <li>Nachbearbeitung notwendig</li>
+          <li>Harze erfordern sorgfältigen Umgang</li>
+        </ul>
+      </article>
+
+      <article class="knowledge-card">
+        <span class="knowledge-tag">Kinematik</span>
+        <h3>Bedslinger &amp; CoreXY</h3>
+        <p>Beim Bedslinger bewegt sich das Druckbett meist in Y-Richtung. CoreXY-Systeme bewegen den Druckkopf besonders schnell und eignen sich gut für höhere Druckgeschwindigkeiten.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft" id="verfahren">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">02 · Druckverfahren</span>
+      <h2>Wie entsteht ein gedrucktes Teil?</h2>
+      <p class="lead">Beim FDM-Druck wird ein digitales 3D-Modell in viele dünne Schichten zerlegt. Der Drucker baut diese Schichten nacheinander auf.</p>
+    </div>
+
+    <div class="process-grid">
+      <article class="process-step"><span>01</span><h3>3D-Modell</h3><p>Das Modell liegt zum Beispiel als STL, 3MF oder OBJ vor.</p></article>
+      <article class="process-step"><span>02</span><h3>Slicing</h3><p>Der Slicer berechnet Schichten, Wege, Support, Infill und Geschwindigkeiten.</p></article>
+      <article class="process-step"><span>03</span><h3>Aufheizen</h3><p>Düse und gegebenenfalls Druckbett werden auf die passende Temperatur gebracht.</p></article>
+      <article class="process-step"><span>04</span><h3>Schichtaufbau</h3><p>Das Material wird Bahn für Bahn aufgetragen und verbindet sich mit der vorherigen Schicht.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="filamente">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">03 · Filamente</span>
+      <h2>Welches Filament für welchen Zweck?</h2>
+      <p class="lead">Das richtige Material entscheidet über Stabilität, Temperaturbeständigkeit, Flexibilität, Optik und Verarbeitung.</p>
+    </div>
+
+    <div class="filament-grid">
+      <article class="filament-card filament-pla">
+        <div class="filament-head"><strong>PLA</strong><span>Einsteigerfreundlich</span></div>
+        <p>Sehr leicht zu drucken, formstabil und in vielen Farben erhältlich.</p>
+        <dl>
+          <div><dt>Gut für</dt><dd>Deko, Modelle, Gehäuse, Prototypen</dd></div>
+          <div><dt>Vorteil</dt><dd>saubere Oberfläche, einfache Verarbeitung</dd></div>
+          <div><dt>Beachten</dt><dd>weniger hitzebeständig</dd></div>
+        </dl>
+      </article>
+
+      <article class="filament-card filament-petg">
+        <div class="filament-head"><strong>PETG</strong><span>Robust</span></div>
+        <p>Zäher als PLA und gut geeignet für funktionale Bauteile und Anwendungen mit mehr Belastung.</p>
+        <dl>
+          <div><dt>Gut für</dt><dd>Halterungen, Outdoor, Funktionsteile</dd></div>
+          <div><dt>Vorteil</dt><dd>zäh, wasserbeständig, widerstandsfähig</dd></div>
+          <div><dt>Beachten</dt><dd>kann stärker zu Stringing neigen</dd></div>
+        </dl>
+      </article>
+
+      <article class="filament-card filament-tpu">
+        <div class="filament-head"><strong>TPU</strong><span>Flexibel</span></div>
+        <p>Elastisches Material für Bauteile, die sich biegen, federn oder Stöße abfangen sollen.</p>
+        <dl>
+          <div><dt>Gut für</dt><dd>Puffer, Schutzteile, flexible Halter</dd></div>
+          <div><dt>Vorteil</dt><dd>elastisch und stoßdämpfend</dd></div>
+          <div><dt>Beachten</dt><dd>langsamer drucken, sauberer Filamentweg wichtig</dd></div>
+        </dl>
+      </article>
+
+      <article class="filament-card">
+        <div class="filament-head"><strong>ABS / ASA</strong><span>Temperaturfester</span></div>
+        <p>Robuste technische Kunststoffe mit höherer Temperaturbeständigkeit. ASA ist zusätzlich für UV-belastete Außenanwendungen interessant.</p>
+        <dl>
+          <div><dt>Gut für</dt><dd>technische Bauteile, Outdoor, Gehäuse</dd></div>
+          <div><dt>Beachten</dt><dd>geschlossener Bauraum sinnvoll</dd></div>
+        </dl>
+      </article>
+    </div>
+
+    <div class="knowledge-tip">
+      <strong>Filament trocken lagern</strong>
+      <p>Viele Filamente nehmen Feuchtigkeit aus der Luft auf. Feuchtes Material kann zu Blasen, Knacken, unsauberen Oberflächen und schlechter Schichthaftung führen.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft" id="slicer">
+  <div class="site-shell split">
+    <div>
+      <span class="eyebrow">04 · Slicer</span>
+      <h2>Der Slicer übersetzt dein Modell für den Drucker.</h2>
+      <p class="lead">Ein Slicer erzeugt aus dem 3D-Modell die Bewegungen und Druckparameter, die der Drucker ausführt.</p>
+    </div>
+
+    <div class="check-list">
+      <div class="check-item"><div><strong>Layerhöhe</strong><span>Steuert Auflösung, Oberfläche und Druckzeit.</span></div></div>
+      <div class="check-item"><div><strong>Infill</strong><span>Bestimmt die innere Struktur und beeinflusst Gewicht, Stabilität und Druckdauer.</span></div></div>
+      <div class="check-item"><div><strong>Wände</strong><span>Mehr Außenlinien erhöhen oft die Stabilität stärker als sehr viel Infill.</span></div></div>
+      <div class="check-item"><div><strong>Support</strong><span>Stützt Überhänge, die nicht frei in der Luft gedruckt werden können.</span></div></div>
+      <div class="check-item"><div><strong>Temperatur</strong><span>Muss zu Filament, Düse und Druckgeschwindigkeit passen.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="einstellungen">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">05 · Einstellungen</span>
+      <h2>Die wichtigsten Druckparameter.</h2>
+    </div>
+
+    <div class="settings-table">
+      <div class="settings-row settings-head"><span>Einstellung</span><span>Was sie beeinflusst</span><span>Praxis</span></div>
+      <div class="settings-row"><strong>Layerhöhe</strong><span>Detailgrad und Druckzeit</span><span>Kleine Layer = feiner, aber langsamer</span></div>
+      <div class="settings-row"><strong>Infill</strong><span>Innenstruktur und Gewicht</span><span>Mehr ist nicht automatisch besser</span></div>
+      <div class="settings-row"><strong>Wandlinien</strong><span>Festigkeit der Außenbereiche</span><span>Für Funktionsteile oft sehr wichtig</span></div>
+      <div class="settings-row"><strong>Druckgeschwindigkeit</strong><span>Zeit, Qualität und Schwingungen</span><span>Zu schnell kann Details verschlechtern</span></div>
+      <div class="settings-row"><strong>Retract</strong><span>Stringing zwischen Bereichen</span><span>Muss zum Extruder passen</span></div>
+      <div class="settings-row"><strong>Lüfter</strong><span>Kühlung der Schichten</span><span>PLA meist stärker kühlen als technische Materialien</span></div>
+      <div class="settings-row"><strong>Support</strong><span>Druckbarkeit von Überhängen</span><span>Nur dort einsetzen, wo nötig</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft" id="zubehoer">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">06 · Zubehör</span>
+      <h2>Nützliches Zubehör rund um den 3D-Druck.</h2>
+      <p class="lead">Nicht alles ist zwingend nötig. Einige Dinge machen den Alltag aber deutlich einfacher und reproduzierbarer.</p>
+    </div>
+
+    <div class="knowledge-grid">
+      <article class="knowledge-card"><span class="knowledge-icon">◉</span><h3>Filament-Trockner</h3><p>Hilft bei feuchtigkeitsempfindlichen Materialien und kann die Druckqualität deutlich verbessern.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">▤</span><h3>Trockenbox &amp; Silicagel</h3><p>Für die Lagerung angebrochener Rollen, besonders bei längeren Standzeiten.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">⌁</span><h3>Ersatzdüsen</h3><p>Düsen sind Verschleißteile. Abrasive Filamente können Messingdüsen schneller abnutzen.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">▰</span><h3>Druckplatten</h3><p>PEI-Platten und strukturierte Oberflächen können Haftung und Unterseite des Druckteils beeinflussen.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">⌖</span><h3>Messschieber</h3><p>Unverzichtbar, wenn Teile passen sollen oder Maße von vorhandenen Bauteilen übernommen werden.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">✂</span><h3>Entgrater &amp; Seitenschneider</h3><p>Praktisch zum Entfernen von Support, kleinen Fäden und scharfen Kanten.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">▣</span><h3>Aufbewahrung</h3><p>Boxen für Düsen, Ersatzteile, Werkzeuge und Filament sorgen für reproduzierbares Arbeiten.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">↕</span><h3>Düsen in verschiedenen Größen</h3><p>Kleine Düsen für Details, größere Düsen für stärkere Linien und schnelleren Materialauftrag.</p></article>
+      <article class="knowledge-card"><span class="knowledge-icon">⚙</span><h3>Ersatzteile</h3><p>Typische Verschleißteile sind Düsen, PTFE-Schläuche, Riemen, Rollen, Lüfter und Hotend-Komponenten.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="wartung">
+  <div class="site-shell split">
+    <div>
+      <span class="eyebrow">07 · Wartung</span>
+      <h2>Ein gepflegter Drucker druckt zuverlässiger.</h2>
+      <p class="lead">Regelmäßige kleine Kontrollen verhindern viele Probleme, bevor sie im Druck sichtbar werden.</p>
+    </div>
+
+    <div class="maintenance-list">
+      <div><span>01</span><strong>Druckplatte reinigen</strong><p>Fett und Staub verschlechtern die Haftung.</p></div>
+      <div><span>02</span><strong>Düse kontrollieren</strong><p>Verschleiß und Ablagerungen können den Materialfluss verändern.</p></div>
+      <div><span>03</span><strong>Riemen prüfen</strong><p>Zu locker oder zu straff kann die Druckqualität beeinflussen.</p></div>
+      <div><span>04</span><strong>Führungen sauber halten</strong><p>Staub und Schmutz können Bewegungen beeinträchtigen.</p></div>
+      <div><span>05</span><strong>Filament trocken halten</strong><p>Besonders wichtig bei hygroskopischen Materialien.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft" id="fehler">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">08 · Fehlerbilder</span>
+      <h2>Typische Probleme und mögliche Ursachen.</h2>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Der Druck haftet nicht auf dem Druckbett.</summary>
+        <p>Mögliche Ursachen sind eine verschmutzte Druckplatte, falscher Z-Offset, ungeeignete Betttemperatur oder zu wenig Kontaktfläche.</p>
+      </details>
+      <details>
+        <summary>Zwischen Bauteilen entstehen dünne Fäden.</summary>
+        <p>Das nennt man Stringing. Häufig spielen Filamentfeuchtigkeit, Temperatur, Retract und Bewegungsgeschwindigkeit eine Rolle.</p>
+      </details>
+      <details>
+        <summary>Die Schichten verbinden sich schlecht.</summary>
+        <p>Mögliche Gründe sind zu niedrige Temperatur, zu starke Kühlung, ungeeignetes Materialprofil oder feuchtes Filament.</p>
+      </details>
+      <details>
+        <summary>Die Ecken lösen sich und ziehen sich nach oben.</summary>
+        <p>Warping entsteht durch Spannungen beim Abkühlen. Bett-Haftung, Bauraumtemperatur und Materialwahl sind wichtige Faktoren.</p>
+      </details>
+      <details>
+        <summary>Der Drucker fördert kaum oder kein Material.</summary>
+        <p>Mögliche Ursachen sind eine verstopfte Düse, ein Problem im Extruder, zu niedrige Temperatur oder eine blockierte Filamentführung.</p>
+      </details>
+      <details>
+        <summary>Maße stimmen nicht exakt.</summary>
+        <p>Je nach Drucker, Material, Orientierung und Konstruktion können Toleranzen nötig sein. Bei Passungen sollte bewusst mit Spiel konstruiert werden.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="stl">
+  <div class="site-shell">
+    <div class="section-head">
+      <span class="eyebrow">09 · STL &amp; Modelle</span>
+      <h2>Empfohlene Downloadquellen.</h2>
+      <p class="lead">Finde ein Modell, lade es herunter und lass es anschließend von SmartWerk drucken.</p>
+    </div>
+
+    <div class="source-grid">
+      <a class="source-card" href="https://www.thingiverse.com/" target="_blank" rel="noopener noreferrer"><small>Große Sammlung</small><h3>Thingiverse</h3><p>Eine der größten kostenlosen Sammlungen für 3D-Druck.</p></a>
+      <a class="source-card" href="https://www.printables.com/" target="_blank" rel="noopener noreferrer"><small>Qualität &amp; Community</small><h3>Printables</h3><p>Hochwertige Modelle und getestete Designs.</p></a>
+      <a class="source-card" href="https://cults3d.com/" target="_blank" rel="noopener noreferrer"><small>Free &amp; Premium</small><h3>Cults3D</h3><p>Kreative Designs, freie und kostenpflichtige STL-Dateien.</p></a>
+      <a class="source-card" href="https://www.myminifactory.com/" target="_blank" rel="noopener noreferrer"><small>Designer Community</small><h3>MyMiniFactory</h3><p>Viele geprüfte Modelle und starke Designer-Community.</p></a>
+      <a class="source-card" href="https://makerworld.com/" target="_blank" rel="noopener noreferrer"><small>Modelle &amp; Community</small><h3>MakerWorld</h3><p>Große Community-Plattform mit vielen druckfertigen 3D-Modellen.</p></a>
+      <a class="source-card" href="https://space.snapmaker.com/" target="_blank" rel="noopener noreferrer"><small>Snapmaker Community</small><h3>Snapmaker Space</h3><p>Community-Plattform für Projekte, Modelle und kreative 3D-Druck-Ideen.</p></a>
+    </div>
+
+    <div class="license-note">
+      <strong>Hinweis zur Lizenz</strong>
+      <p>Bitte prüfe vor dem Upload die Lizenzbedingungen des Modells. Nicht jede frei herunterladbare Datei darf kommerziell vervielfältigt werden.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-soft">
+  <div class="site-shell split">
+    <div>
+      <span class="eyebrow">Keine passende Datei?</span>
+      <h2>Dann starten wir mit deiner Idee.</h2>
+      <p class="lead">Eine vorhandene STL ist nur einer von mehreren Wegen.</p>
+    </div>
+    <div class="check-list">
+      <div class="check-item"><div><strong>Foto oder Skizze</strong><span>Gut für Geometrie, Aufbau und grobe Maße.</span></div></div>
+      <div class="check-item"><div><strong>Vorhandenes Teil</strong><span>Als Referenz für Passform und Funktion.</span></div></div>
+      <div class="check-item"><div><strong>Beschreibung</strong><span>Wenn das Problem klar ist, kann daraus eine Lösung entwickelt werden.</span></div></div>
+      <div class="check-item"><div><strong>Direkt drucken lassen</strong><span>Mit fertiger Datei geht es direkt zum 3D-Druck-Konfigurator.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight">
+  <div class="site-shell shop-cta-box">
+    <div>
+      <span class="eyebrow">SmartWerk 3D-Druck</span>
+      <h2>Aus Wissen wird ein echtes Teil.</h2>
+      <p>Du hast eine Datei gefunden oder selbst konstruiert? Dann kannst du direkt mit deinem Druck starten.</p>
+    </div>
+    <div class="action-row">
+      <a class="button button-primary" href="3d-druck.html#konfigurator">3D-Druck starten</a>
+      <a class="button button-secondary" href="individuell.html">Individuell anfragen</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<div data-footer-slot></div>
+</body>
+</html>
