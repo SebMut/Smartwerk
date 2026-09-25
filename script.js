@@ -467,6 +467,89 @@ function setupContactForm() {
   });
 }
 
+function setupMobileKnowledge() {
+  const page = document.querySelector('body[data-page="stl-dateien"]');
+  if (!page) return;
+
+  const media = window.matchMedia('(max-width: 640px)');
+  const sections = [...page.querySelectorAll('main > section.section[id]')]
+    .filter(section => section.querySelector(':scope > .site-shell > .section-head'));
+
+  sections.forEach((section, index) => {
+    const shell = section.querySelector(':scope > .site-shell');
+    const head = shell?.querySelector(':scope > .section-head');
+    if (!shell || !head) return;
+
+    section.classList.add('mobile-section-collapsible');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'mobile-section-toggle';
+    button.setAttribute('aria-expanded', 'true');
+    button.innerHTML = '<span>Inhalt anzeigen</span><b aria-hidden="true">+</b>';
+    head.insertAdjacentElement('afterend', button);
+
+    button.addEventListener('click', () => {
+      const collapsed = section.classList.toggle('is-collapsed');
+      button.setAttribute('aria-expanded', String(!collapsed));
+      button.querySelector('span').textContent = collapsed ? 'Inhalt anzeigen' : 'Inhalt schließen';
+      button.querySelector('b').textContent = collapsed ? '+' : '−';
+    });
+
+    // On mobile keep the first knowledge section open and collapse the rest.
+    section.dataset.mobileDefault = index === 0 ? 'open' : 'closed';
+  });
+
+  const applyViewportState = () => {
+    sections.forEach(section => {
+      const button = section.querySelector('.mobile-section-toggle');
+      if (!button) return;
+
+      if (!media.matches) {
+        section.classList.remove('is-collapsed');
+        button.setAttribute('aria-expanded', 'true');
+        button.querySelector('span').textContent = 'Inhalt schließen';
+        button.querySelector('b').textContent = '−';
+        return;
+      }
+
+      const shouldCollapse = section.dataset.mobileDefault === 'closed' && !section.dataset.mobileOpened;
+      section.classList.toggle('is-collapsed', shouldCollapse);
+      button.setAttribute('aria-expanded', String(!shouldCollapse));
+      button.querySelector('span').textContent = shouldCollapse ? 'Inhalt anzeigen' : 'Inhalt schließen';
+      button.querySelector('b').textContent = shouldCollapse ? '+' : '−';
+    });
+  };
+
+  const openTarget = hash => {
+    if (!hash || hash === '#') return;
+    const target = document.querySelector(hash);
+    if (!target?.classList.contains('mobile-section-collapsible')) return;
+
+    target.dataset.mobileOpened = 'true';
+    target.classList.remove('is-collapsed');
+
+    const button = target.querySelector('.mobile-section-toggle');
+    if (button) {
+      button.setAttribute('aria-expanded', 'true');
+      button.querySelector('span').textContent = 'Inhalt schließen';
+      button.querySelector('b').textContent = '−';
+    }
+  };
+
+  page.querySelectorAll('.knowledge-nav a[href^="#"], .knowledge-topic-card[href^="#"]').forEach(link => {
+    link.addEventListener('click', () => openTarget(link.getAttribute('href')));
+  });
+
+  if (location.hash) {
+    openTarget(location.hash);
+    setTimeout(() => document.querySelector(location.hash)?.scrollIntoView({block:'start'}), 0);
+  }
+
+  media.addEventListener?.('change', applyViewportState);
+  applyViewportState();
+}
+
 function setupHeroImage() {
   document.documentElement.style.setProperty('--hero-image', `url("${SITE.hero}")`);
 }
@@ -480,5 +563,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupConfigurator();
   renderCart();
   setupContactForm();
+  setupMobileKnowledge();
   setupHeroImage();
 });
