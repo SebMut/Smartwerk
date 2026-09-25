@@ -3422,3 +3422,164 @@ body[data-page="home"] .product-category{
 .wp3dprint-plugin-mount:not([hidden]) + .wp3dprint-static-preview{
   display:none;
 }
+
+
+/* Footer final — compact, consistent SmartWerk closing */
+.site-footer{
+  margin-top:0;
+  border-top:1px solid #e5eaec;
+  background:#f8fafb;
+  color:#536166;
+}
+
+.footer-main{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:56px;
+  align-items:start;
+  padding-top:42px;
+  padding-bottom:32px;
+}
+
+.footer-intro{
+  max-width:560px;
+}
+
+.footer-brand{
+  margin-bottom:15px;
+}
+
+.footer-brand img{
+  height:38px;
+  width:auto;
+  max-width:170px;
+  object-fit:contain;
+}
+
+.footer-intro>p{
+  max-width:500px;
+  color:#4e5c61;
+  font-size:.82rem;
+  line-height:1.62;
+}
+
+.footer-location{
+  display:block;
+  margin-top:9px;
+  color:#849095;
+  font-size:.68rem;
+  font-weight:750;
+}
+
+.footer-services{
+  display:grid;
+  min-width:190px;
+  gap:8px;
+}
+
+.footer-services>span{
+  margin-bottom:3px;
+  color:#8a9599;
+  font-size:.62rem;
+  font-weight:900;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+.footer-services a{
+  color:#35474b;
+  font-size:.78rem;
+  font-weight:750;
+  transition:color .17s ease;
+}
+
+.footer-services a:hover{
+  color:var(--primary);
+}
+
+.footer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  min-height:58px;
+  border-top:1px solid #e2e7e9;
+}
+
+.footer-service-line{
+  color:#7b878b;
+  font-size:.68rem;
+  font-weight:700;
+}
+
+.footer-links{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:8px 18px;
+}
+
+.footer-links a{
+  color:#657276;
+  font-size:.68rem;
+  font-weight:750;
+  transition:color .17s ease;
+}
+
+.footer-links a:hover{
+  color:var(--primary);
+}
+
+@media(max-width:760px){
+  .footer-main{
+    grid-template-columns:1fr;
+    gap:28px;
+    padding-top:34px;
+    padding-bottom:28px;
+  }
+
+  .footer-services{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    min-width:0;
+    gap:10px 18px;
+  }
+
+  .footer-services>span{
+    grid-column:1/-1;
+  }
+
+  .footer-bottom{
+    display:grid;
+    justify-content:stretch;
+    gap:13px;
+    padding-top:17px;
+    padding-bottom:20px;
+  }
+
+  .footer-links{
+    justify-content:flex-start;
+  }
+}
+
+@media(max-width:480px){
+  .footer-main{
+    gap:24px;
+  }
+
+  .footer-services{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .footer-services>span{
+    grid-column:auto;
+  }
+
+  .footer-service-line{
+    line-height:1.5;
+  }
+
+  .footer-links{
+    gap:9px 16px;
+  }
+}
