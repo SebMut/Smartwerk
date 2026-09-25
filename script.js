@@ -24,7 +24,7 @@ const PRODUCTS = [
     id: 'bottle-tags',
     name: 'Personalisierter Flaschenanhänger mit Wunschtext',
     price: '9,99 € – 259,00 €',
-    image: 'assets/product-3.jpg',
+    image: 'https://i0.wp.com/www.smartwerk.art/wp-content/uploads/2026/09/il_fullxfull.7785440872_60e6.jpg?fit=1536%2C2048&ssl=1',
     category: 'personalisiert',
     badge: 'Personalisierbar'
   },
@@ -32,7 +32,7 @@ const PRODUCTS = [
     id: 'fence-hooks',
     name: 'Performance Zaunhaken – Tennis, Padel & Outdoor',
     price: '12,90 € – 79,99 €',
-    image: 'assets/product-4.jpg',
+    image: 'https://i0.wp.com/www.smartwerk.art/wp-content/uploads/2026/09/il_fullxfull.7825772346_25yz-1-scaled.jpg?fit=1920%2C2560&ssl=1',
     category: 'sport',
     badge: 'Bestseller'
   },
@@ -40,7 +40,7 @@ const PRODUCTS = [
     id: 'mini-signs',
     name: 'Personalisiertes Mini-Kennzeichen im deutschen Design',
     price: '9,90 € – 23,90 €',
-    image: 'assets/product-5.jpg',
+    image: 'https://i0.wp.com/www.smartwerk.art/wp-content/uploads/2026/09/il_fullxfull.8518900914_j7db.jpg?fit=1448%2C1086&ssl=1',
     category: 'personalisiert',
     badge: 'Geschenkidee'
   },
@@ -48,7 +48,7 @@ const PRODUCTS = [
     id: 'wiesn-frame',
     name: 'Personalisierter Wiesn Fotorahmen – Polaroid Foto-Prop',
     price: '5,90 € – 23,90 €',
-    image: 'assets/product-6.jpg',
+    image: 'https://i0.wp.com/www.smartwerk.art/wp-content/uploads/2026/09/il_fullxfull.8539431640_tso1-1-scaled.jpg?fit=1920%2C2560&ssl=1',
     category: 'geschenk',
     badge: 'Wiesn'
   },
@@ -56,7 +56,7 @@ const PRODUCTS = [
     id: 'place-signs',
     name: 'Personalisiertes Mini-Ortsschild mit Wunschname',
     price: '6,99 € – 14,99 €',
-    image: 'assets/product-7.jpg',
+    image: 'https://i0.wp.com/www.smartwerk.art/wp-content/uploads/2026/09/il_fullxfull.8377106234_l42u.jpg?fit=1448%2C1086&ssl=1',
     category: 'personalisiert',
     badge: 'Personalisierbar'
   },
@@ -64,7 +64,7 @@ const PRODUCTS = [
     id: 'custom-print',
     name: 'Individueller 3D-Druck nach Datei oder Idee',
     price: 'Preis nach Konfiguration',
-    image: 'assets/product-8.svg',
+    image: 'https://i0.wp.com/www.smartwerk.art/wp-content/uploads/2025/12/img_3284.jpeg?fit=512%2C245&ssl=1',
     category: 'individuell',
     badge: 'Made in Feldkirchen'
   }
