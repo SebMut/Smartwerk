@@ -18,6 +18,19 @@
       <button class="filter-button" data-filter="geschenk" aria-pressed="false"><span>Geschenkideen</span></button>
       <button class="filter-button" data-filter="individuell" aria-pressed="false"><span>Individuell</span></button>
     </div>
+
+    <div class="price-filter" data-price-filter>
+      <div class="price-filter-head">
+        <span>Preis</span>
+        <strong><output data-price-min-output>0 €</output><i>–</i><output data-price-max-output>260 €</output></strong>
+      </div>
+      <div class="price-range-wrap">
+        <div class="price-range-track" data-price-track></div>
+        <input class="price-range price-range-min" type="range" min="0" max="260" step="5" value="0" aria-label="Mindestpreis" data-price-min>
+        <input class="price-range price-range-max" type="range" min="0" max="260" step="5" value="260" aria-label="Höchstpreis" data-price-max>
+      </div>
+      <div class="price-range-scale" aria-hidden="true"><span>0 €</span><span>260 €</span></div>
+    </div>
   </div>
 </div><div class="product-grid" data-product-grid></div><div class="shop-price-note" role="note"><span>Preishinweis</span><p>Kein Mehrwertsteuerausweis aufgrund der Kleinunternehmerregelung nach § 19 UStG. Preise zzgl. Versandkosten, sofern nicht anders angegeben.</p></div></div></section>
 <section class="shop-cta"><div class="site-shell shop-cta-box"><div><span class="eyebrow">Noch nicht das Richtige?</span><h2>Du brauchst etwas Individuelles?</h2><p>Schick uns deine Datei – oder starte mit deiner Idee, Skizze oder einem Muster.</p></div><div class="action-row"><a class="button button-primary" href="3d-druck.html#konfigurator">3D-Datei hochladen</a><a class="button button-secondary" href="individuell.html">Individuell anfragen</a></div></div></section>
