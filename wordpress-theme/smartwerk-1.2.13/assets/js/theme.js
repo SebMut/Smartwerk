@@ -288,18 +288,22 @@
 
       field.classList.add('smartwerk-personalization-input');
 
-      let label =
-        form.querySelector('label[for="' + CSS.escape(field.id) + '"]') ||
-        field.closest('label');
+      const wrappingLabel = field.closest('label');
+      let label = form.querySelector('label[for="' + CSS.escape(field.id) + '"]');
 
-      if (!label) {
+      if (!label && !wrappingLabel) {
         label = document.createElement('label');
         label.htmlFor = field.id;
+        label.textContent = 'Personalisierung / Wunschtext';
         field.insertAdjacentElement('beforebegin', label);
       }
 
-      label.classList.add('smartwerk-personalization-label');
-      label.textContent = 'Personalisierung / Wunschtext';
+      if (label) {
+        label.classList.add('smartwerk-personalization-label');
+        label.textContent = 'Personalisierung / Wunschtext';
+      } else if (wrappingLabel) {
+        wrappingLabel.classList.add('smartwerk-personalization-label');
+      }
 
       if (!field.getAttribute('aria-label')) {
         field.setAttribute('aria-label', 'Personalisierung / Wunschtext');
