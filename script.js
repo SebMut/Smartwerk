@@ -392,7 +392,15 @@ function setupConfigurator() {
     config.style.setProperty('--viewer-accent', swatch.dataset.color);
   }));
 
-  if (drop && fileInput) drop.addEventListener('click', () => fileInput.click());
+  if (drop && fileInput) {
+    drop.addEventListener('click', () => fileInput.click());
+    drop.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        fileInput.click();
+      }
+    });
+  }
   fileInput?.addEventListener('change', () => {
     if (fileInput.files[0]) {
       fileName.textContent = fileInput.files[0].name;
@@ -442,8 +450,8 @@ function renderCart() {
         <h2>Deine Auswahl</h2>
         <div class="summary-row"><span>Artikel</span><strong>${items.reduce((a,b)=>a+b.qty,0)}</strong></div>
         <div class="summary-row"><span>Versand</span><strong>im Checkout</strong></div>
-        <p class="summary-note">Für diese statische Vorschau wird noch kein echter Checkout ausgeführt.</p>
-        <button class="button button-primary button-wide" type="button" onclick="showToast('Checkout ist in dieser Demo deaktiviert')">Weiter zum Checkout</button>
+        <p class="summary-note">Versand und endgültige Bestellsumme werden im Checkout bestätigt.</p>
+        <button class="button button-primary button-wide" type="button" onclick="showToast('Der Checkout ist in dieser Vorschau noch nicht aktiv')">Weiter zum Checkout</button>
       </aside>
     </div>`;
 
@@ -476,7 +484,7 @@ function setupContactForm() {
   form.addEventListener('submit', event => {
     event.preventDefault();
     const status = form.querySelector('[data-form-status]');
-    status.textContent = 'Danke! In dieser statischen Vorschau wird noch keine Nachricht versendet.';
+    status.textContent = 'Danke! In dieser Vorschau wird die Anfrage noch nicht versendet.';
     status.hidden = false;
   });
 }
