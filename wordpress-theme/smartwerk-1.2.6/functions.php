@@ -372,10 +372,10 @@ function smartwerk_product_gallery_image_html(string $html, int $attachment_id):
     $priority = $is_main ? 'high' : 'auto';
     $sizes = '(max-width: 640px) calc(100vw - 28px), (max-width: 920px) calc(100vw - 48px), (max-width: 1240px) 52vw, 560px';
 
-    $html = preg_replace('/\\sloading=(["\\']).*?\\1/i', '', $html);
-    $html = preg_replace('/\\sdecoding=(["\\']).*?\\1/i', '', $html);
-    $html = preg_replace('/\\sfetchpriority=(["\\']).*?\\1/i', '', $html);
-    $html = preg_replace('/\\ssizes=(["\\']).*?\\1/i', '', $html);
+    $html = preg_replace('/\\sloading="[^"]*"/i', '', $html);
+    $html = preg_replace('/\\sdecoding="[^"]*"/i', '', $html);
+    $html = preg_replace('/\\sfetchpriority="[^"]*"/i', '', $html);
+    $html = preg_replace('/\\ssizes="[^"]*"/i', '', $html);
 
     $attributes = sprintf(
         ' loading="%s" decoding="async" fetchpriority="%s" sizes="%s"',
