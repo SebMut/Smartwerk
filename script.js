@@ -378,7 +378,7 @@ function setupConfigurator() {
   const drop = config.querySelector('.upload-zone');
 
   const recalc = () => {
-    const m = { PLA: 1, PETG: 1.12, TPU: 1.36 }[material?.value] || 1;
+    const m = { PLA: 1, PETG: 1.12, 'TPU 95A': 1.36, TPU: 1.36 }[material?.value] || 1;
     const q = { Standard: 1, Fein: 1.28, Extra: 1.55 }[quality?.value] || 1;
     const s = Number(scale?.value || 100) / 100;
     const value = Math.max(9.9, 13.4 * m * q * Math.pow(s, 1.35));
