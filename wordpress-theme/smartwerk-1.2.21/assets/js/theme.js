@@ -572,8 +572,177 @@
     else open(false);
   }
 
+
+  function setupEtsyInspiredShop() {
+    if (!document.body.classList.contains('page-id-1657')) return;
+
+    document.body.classList.add('sw-etsy-shop-ui');
+
+    const hero = document.querySelector('.sw-shop-hero-inner');
+    const title = document.querySelector('.sw-shop-hero h1');
+    const controls = document.querySelector('[data-smartwerk-shop-filters]');
+    const sourceSearch = controls?.querySelector('[data-shop-search]');
+    const grid = document.querySelector('.sw-shop-products ul.products');
+    if (!hero || !grid) return;
+
+    if (title) {
+      title.dataset.originalTitle = title.textContent || '';
+      title.textContent = 'Inspiration zum Greifen nah';
+    }
+
+    if (!hero.querySelector('.sw-etsy-search')) {
+      const searchWrap = document.createElement('label');
+      searchWrap.className = 'sw-etsy-search';
+      searchWrap.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>' +
+        '<span class="screen-reader-text">Produkte suchen</span>' +
+        '<input type="search" class="sw-etsy-search__input" placeholder="Suche etwas Besonderes" autocomplete="off">';
+      hero.insertAdjacentElement('afterbegin', searchWrap);
+
+      const appSearch = searchWrap.querySelector('input');
+      if (sourceSearch && appSearch) {
+        appSearch.value = sourceSearch.value || '';
+        appSearch.addEventListener('input', () => {
+          sourceSearch.value = appSearch.value;
+          sourceSearch.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+      }
+    }
+
+    if (!hero.querySelector('.sw-etsy-tabs')) {
+      const tabs = document.createElement('div');
+      tabs.className = 'sw-etsy-tabs';
+      tabs.setAttribute('role', 'tablist');
+      tabs.innerHTML =
+        '<button type="button" class="is-active" role="tab" aria-selected="true" data-sw-etsy-tab="for-you">Für dich</button>' +
+        '<button type="button" role="tab" aria-selected="false" data-sw-etsy-tab="new">Neue Schätze</button>';
+      title?.insertAdjacentElement('afterend', tabs);
+
+      const originalOrder = [...grid.children];
+      tabs.addEventListener('click', event => {
+        const button = event.target.closest('[data-sw-etsy-tab]');
+        if (!button) return;
+
+        tabs.querySelectorAll('[data-sw-etsy-tab]').forEach(tab => {
+          const active = tab === button;
+          tab.classList.toggle('is-active', active);
+          tab.setAttribute('aria-selected', String(active));
+        });
+
+        if (button.dataset.swEtsyTab === 'new') {
+          [...grid.children]
+            .sort((a, b) => {
+              const aid = Number((a.className.match(/post-(\d+)/) || [0, 0])[1]);
+              const bid = Number((b.className.match(/post-(\d+)/) || [0, 0])[1]);
+              return bid - aid;
+            })
+            .forEach(card => grid.append(card));
+        } else {
+          originalOrder.forEach(card => grid.append(card));
+        }
+      });
+    }
+
+    let favorites = [];
+    try {
+      favorites = JSON.parse(localStorage.getItem('smartwerk_shop_favorites_v1') || '[]');
+      if (!Array.isArray(favorites)) favorites = [];
+    } catch (_) {
+      favorites = [];
+    }
+
+    const saveFavorites = () => {
+      try { localStorage.setItem('smartwerk_shop_favorites_v1', JSON.stringify(favorites)); } catch (_) {}
+    };
+
+    const productId = card => Number((card.className.match(/post-(\d+)/) || [0, 0])[1]);
+
+    [...grid.querySelectorAll(':scope > li.product')].forEach(card => {
+      const id = productId(card);
+      const link = card.querySelector('a.woocommerce-LoopProduct-link, a.woocommerce-loop-product__link');
+      if (!id || !link) return;
+
+      if (!card.querySelector('.sw-etsy-favorite')) {
+        const favorite = document.createElement('button');
+        favorite.type = 'button';
+        favorite.className = 'sw-etsy-favorite';
+        favorite.setAttribute('aria-label', 'Zu Favoriten hinzufügen');
+        favorite.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5 4.3 13A5.15 5.15 0 0 1 11.6 5.8L12 6.2l.4-.4A5.15 5.15 0 0 1 19.7 13z"></path></svg>';
+        card.append(favorite);
+
+        const syncFavorite = () => {
+          const active = favorites.includes(id);
+          favorite.classList.toggle('is-active', active);
+          favorite.setAttribute('aria-pressed', String(active));
+          favorite.setAttribute('aria-label', active ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen');
+        };
+
+        favorite.addEventListener('click', event => {
+          event.preventDefault();
+          event.stopPropagation();
+          favorites = favorites.includes(id)
+            ? favorites.filter(item => item !== id)
+            : [...favorites, id];
+          saveFavorites();
+          syncFavorite();
+          document.dispatchEvent(new CustomEvent('smartwerk:favorites-changed'));
+        });
+
+        syncFavorite();
+      }
+
+      if (!card.querySelector('.sw-etsy-more')) {
+        const more = document.createElement('button');
+        more.type = 'button';
+        more.className = 'sw-etsy-more';
+        more.setAttribute('aria-label', 'Produkt teilen');
+        more.innerHTML = '<span></span><span></span><span></span>';
+        card.append(more);
+
+        more.addEventListener('click', async event => {
+          event.preventDefault();
+          event.stopPropagation();
+          const url = link.href;
+          const productTitle = card.querySelector('.woocommerce-loop-product__title')?.textContent?.trim() || 'SmartWerk Produkt';
+
+          if (navigator.share) {
+            try { await navigator.share({ title: productTitle, url }); } catch (_) {}
+          } else if (navigator.clipboard) {
+            try {
+              await navigator.clipboard.writeText(url);
+              more.classList.add('is-copied');
+              window.setTimeout(() => more.classList.remove('is-copied'), 1200);
+            } catch (_) {}
+          }
+        });
+      }
+    });
+
+    const favoriteFilter = document.querySelector('[data-sw-etsy-favorites-filter]');
+    if (favoriteFilter) {
+      const applyFavoriteFilter = () => {
+        const active = favoriteFilter.getAttribute('aria-pressed') === 'true';
+        [...grid.querySelectorAll(':scope > li.product')].forEach(card => {
+          const show = !active || favorites.includes(productId(card));
+          card.classList.toggle('sw-favorite-filter-hidden', !show);
+        });
+      };
+
+      favoriteFilter.addEventListener('click', () => {
+        const active = favoriteFilter.getAttribute('aria-pressed') !== 'true';
+        favoriteFilter.setAttribute('aria-pressed', String(active));
+        favoriteFilter.classList.toggle('is-active', active);
+        applyFavoriteFilter();
+        if (active) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      document.addEventListener('smartwerk:favorites-changed', applyFavoriteFilter);
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     setupNativeConsent();
+    setupEtsyInspiredShop();
     setupMobileMenu();
     setupMobileKnowledge();
     setupCartCountSync();
