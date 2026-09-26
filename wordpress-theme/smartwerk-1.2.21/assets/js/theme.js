@@ -171,6 +171,204 @@
   }
 
 
+
+  function setupSmartWerkShopCards() {
+    const grid = document.querySelector('.sw-shop-products ul.products');
+    if (!grid) return;
+
+    let favorites = [];
+    try {
+      favorites = JSON.parse(localStorage.getItem('smartwerk_shop_favorites_v1') || '[]');
+      if (!Array.isArray(favorites)) favorites = [];
+    } catch (_) {
+      favorites = [];
+    }
+
+    const saveFavorites = () => {
+      try {
+        localStorage.setItem('smartwerk_shop_favorites_v1', JSON.stringify(favorites));
+      } catch (_) {}
+    };
+
+    const getProductId = card => {
+      const classMatch = card.className.match(/post-(\d+)/);
+      if (classMatch) return Number(classMatch[1]);
+
+      const nativeAction = card.querySelector('[data-product_id]');
+      return Number(nativeAction?.dataset.product_id || 0);
+    };
+
+    const closeMenus = except => {
+      grid.querySelectorAll('.sw-card-action-menu.is-open').forEach(menu => {
+        if (menu !== except) {
+          menu.classList.remove('is-open');
+          menu.hidden = true;
+          const trigger = menu.closest('.product')?.querySelector('.sw-card-more');
+          trigger?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    };
+
+    [...grid.querySelectorAll(':scope > li.product')].forEach(card => {
+      if (card.dataset.swCardEnhanced === '1') return;
+
+      const id = getProductId(card);
+      const productLink = card.querySelector('a.woocommerce-LoopProduct-link, a.woocommerce-loop-product__link');
+      const nativeAction = card.querySelector(
+        'a.button.product_type_simple.add_to_cart_button, a.button.product_type_variable, a.button.product_type_grouped, a.button.product_type_external, a.button'
+      );
+
+      if (!id || !productLink) return;
+
+      card.dataset.swCardEnhanced = '1';
+      card.classList.add('sw-shop-card-enhanced');
+
+      const favorite = document.createElement('button');
+      favorite.type = 'button';
+      favorite.className = 'sw-card-favorite';
+      favorite.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5 4.3 13A5.15 5.15 0 0 1 11.6 5.8L12 6.2l.4-.4A5.15 5.15 0 0 1 19.7 13z"></path></svg>';
+      card.append(favorite);
+
+      const syncFavorite = () => {
+        const active = favorites.includes(id);
+        favorite.classList.toggle('is-active', active);
+        favorite.setAttribute('aria-pressed', String(active));
+        favorite.setAttribute(
+          'aria-label',
+          active ? 'Aus Favoriten entfernen' : 'Zu Favoriten hinzufügen'
+        );
+      };
+
+      favorite.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        favorites = favorites.includes(id)
+          ? favorites.filter(item => item !== id)
+          : [...favorites, id];
+
+        saveFavorites();
+        syncFavorite();
+      });
+
+      syncFavorite();
+
+      const more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'sw-card-more';
+      more.setAttribute('aria-label', 'Produktaktionen öffnen');
+      more.setAttribute('aria-expanded', 'false');
+      more.innerHTML = '<span></span><span></span><span></span>';
+      card.append(more);
+
+      const menu = document.createElement('div');
+      menu.className = 'sw-card-action-menu';
+      menu.hidden = true;
+      menu.setAttribute('role', 'menu');
+
+      const share = document.createElement('button');
+      share.type = 'button';
+      share.className = 'sw-card-action';
+      share.setAttribute('role', 'menuitem');
+      share.innerHTML =
+        '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M5 12v7h14v-7"/></svg><span>Teilen</span>';
+      menu.append(share);
+
+      const cartAction = document.createElement('button');
+      cartAction.type = 'button';
+      cartAction.className = 'sw-card-action sw-card-action--cart';
+      cartAction.setAttribute('role', 'menuitem');
+
+      const isSimpleAdd =
+        nativeAction?.classList.contains('product_type_simple') &&
+        nativeAction.classList.contains('add_to_cart_button');
+
+      cartAction.innerHTML = isSimpleAdd
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4.5h2l1.7 9.1a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4l1.2-5.3H7.1"/><path d="M12 6v5m-2.5-2.5h5"/></svg><span>In den Warenkorb</span>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Ausführung wählen</span>';
+      menu.append(cartAction);
+      card.append(menu);
+
+      more.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const open = menu.hidden;
+        closeMenus(menu);
+        menu.hidden = !open;
+        menu.classList.toggle('is-open', open);
+        more.setAttribute('aria-expanded', String(open));
+
+        if (open) {
+          menu.querySelector('button')?.focus();
+        }
+      });
+
+      share.addEventListener('click', async event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const url = productLink.href;
+        const title =
+          card.querySelector('.woocommerce-loop-product__title')?.textContent?.trim() ||
+          'SmartWerk Produkt';
+
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, url });
+          } catch (_) {}
+        } else if (navigator.clipboard) {
+          try {
+            await navigator.clipboard.writeText(url);
+            share.classList.add('is-copied');
+            const label = share.querySelector('span');
+            if (label) label.textContent = 'Link kopiert';
+            window.setTimeout(() => {
+              share.classList.remove('is-copied');
+              if (label) label.textContent = 'Teilen';
+            }, 1400);
+          } catch (_) {}
+        }
+      });
+
+      cartAction.addEventListener('click', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        closeMenus();
+
+        if (isSimpleAdd && nativeAction) {
+          nativeAction.click();
+          return;
+        }
+
+        window.location.href = nativeAction?.href || productLink.href;
+      });
+    });
+
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.sw-card-action-menu, .sw-card-more')) {
+        closeMenus();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeMenus();
+    });
+
+    if (window.jQuery) {
+      window.jQuery(document.body).on('added_to_cart', (_event, _fragments, _hash, button) => {
+        const nativeButton = button?.get?.(0) || button;
+        const card = nativeButton?.closest?.('li.product');
+        if (!card) return;
+
+        const trigger = card.querySelector('.sw-card-more');
+        trigger?.classList.add('is-success');
+        window.setTimeout(() => trigger?.classList.remove('is-success'), 1200);
+      });
+    }
+  }
+
   function setupShopFilters() {
     const controls = document.querySelector('[data-smartwerk-shop-filters]');
     const grid = document.querySelector('.sw-shop-products ul.products');
@@ -578,6 +776,7 @@
     setupMobileKnowledge();
     setupCartCountSync();
     setupShopFilters();
+    setupSmartWerkShopCards();
     setupProductPersonalizationFields();
     setupProductQuantityLabel();
   });
