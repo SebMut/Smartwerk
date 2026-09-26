@@ -1690,3 +1690,46 @@ function smartwerk_etsy_mobile_shop_nav(): void {
     <?php
 }
 add_action('wp_footer', 'smartwerk_etsy_mobile_shop_nav', 20);
+
+
+/**
+ * SmartWerk 1.2.29 — make the Etsy-inspired mobile shop mode server-side.
+ * This avoids relying on JavaScript just to attach the visual mode class.
+ */
+function smartwerk_etsy_shop_body_class(array $classes): array {
+    if (is_page(1657) || (function_exists('is_shop') && is_shop())) {
+        $classes[] = 'sw-etsy-shop-ui';
+    }
+
+    return $classes;
+}
+add_filter('body_class', 'smartwerk_etsy_shop_body_class', 40);
+
+/**
+ * Render the mobile Etsy-style masthead in PHP so the visual structure is
+ * present immediately, before JavaScript runs.
+ */
+function smartwerk_etsy_mobile_masthead(): void {
+    if (!(is_page(1657) || (function_exists('is_shop') && is_shop()))) {
+        return;
+    }
+    ?>
+    <section class="sw-etsy-mobile-masthead" aria-label="SmartWerk Shop">
+        <div class="sw-etsy-mobile-masthead__inner">
+            <label class="sw-etsy-search">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>
+                <span class="screen-reader-text">Produkte suchen</span>
+                <input type="search" class="sw-etsy-search__input" data-sw-etsy-mobile-search placeholder="Suche etwas Besonderes" autocomplete="off">
+            </label>
+
+            <h1>Inspiration zum Greifen nah</h1>
+
+            <div class="sw-etsy-tabs" role="tablist" aria-label="Shop-Ansicht">
+                <button type="button" class="is-active" role="tab" aria-selected="true" data-sw-etsy-tab="for-you">Für dich</button>
+                <button type="button" role="tab" aria-selected="false" data-sw-etsy-tab="new">Neue Schätze</button>
+            </div>
+        </div>
+    </section>
+    <?php
+}
+add_action('wp_body_open', 'smartwerk_etsy_mobile_masthead', 30);
