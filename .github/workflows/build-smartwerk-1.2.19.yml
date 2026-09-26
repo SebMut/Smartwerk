@@ -127,3 +127,5 @@ jobs:
           path: dist/smartwerk-theme-1.2.19.zip
           if-no-files-found: error
           retention-days: 30
+
+# final package rebuild
