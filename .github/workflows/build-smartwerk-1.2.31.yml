@@ -3,7 +3,7 @@ name: Build SmartWerk Theme 1.2.31
 on:
   push:
     branches:
-      - smartwerk-theme-1.2.31-ci-mobile-bottom-nav
+      - smartwerk-theme-1.2.31-ci-shop-actions
     paths:
       - 'wordpress-theme/smartwerk-1.2.21/**'
       - '.github/workflows/build-smartwerk-1.2.31.yml'
