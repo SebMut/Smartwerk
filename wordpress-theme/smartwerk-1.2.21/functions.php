@@ -372,7 +372,7 @@ function smartwerk_product_gallery_image_html(string $html, int $attachment_id):
     $is_main = (int) $product->get_image_id() === $attachment_id;
     $loading = $is_main ? 'eager' : 'lazy';
     $priority = $is_main ? 'high' : 'auto';
-    $sizes = '(max-width: 640px) calc(100vw - 28px), (max-width: 920px) calc(100vw - 48px), (max-width: 1240px) 52vw, 560px';
+    $sizes = '(max-width: 640px) calc(100vw - 28px), (max-width: 920px) min(calc(100vw - 48px), 500px), 430px';
 
     $html = preg_replace('/\\sloading="[^"]*"/i', '', $html);
     $html = preg_replace('/\\sdecoding="[^"]*"/i', '', $html);
@@ -389,6 +389,44 @@ function smartwerk_product_gallery_image_html(string $html, int $attachment_id):
     return preg_replace('/<img\\b/i', '<img' . $attributes, $html, 1) ?: $html;
 }
 add_filter('woocommerce_single_product_image_thumbnail_html', 'smartwerk_product_gallery_image_html', 20, 2);
+
+/**
+ * SmartWerk 1.2.22 — preload the actual product hero image with the same
+ * responsive candidates/sizes used by the WooCommerce gallery. This lets the
+ * browser start the LCP request from <head> without downloading a second,
+ * larger image. Originals remain untouched.
+ */
+function smartwerk_preload_product_lcp_image(): void {
+    if (!function_exists('is_product') || !is_product() || !function_exists('wc_get_product')) {
+        return;
+    }
+
+    $product = wc_get_product(get_queried_object_id());
+    if (!($product instanceof WC_Product)) {
+        return;
+    }
+
+    $image_id = (int) $product->get_image_id();
+    if ($image_id <= 0) {
+        return;
+    }
+
+    $src = wp_get_attachment_image_url($image_id, 'medium_large');
+    if (!$src) {
+        return;
+    }
+
+    $srcset = wp_get_attachment_image_srcset($image_id, 'medium_large');
+    $sizes  = '(max-width: 640px) calc(100vw - 28px), (max-width: 920px) min(calc(100vw - 48px), 500px), 430px';
+
+    printf(
+        '<link rel="preload" as="image" href="%1$s"%2$s imagesizes="%3$s" fetchpriority="high">' . "\n",
+        esc_url($src),
+        $srcset ? ' imagesrcset="' . esc_attr($srcset) . '"' : '',
+        esc_attr($sizes)
+    );
+}
+add_action('wp_head', 'smartwerk_preload_product_lcp_image', 2);
 
 function smartwerk_product_page_asset_cleanup(): void {
     if (!function_exists('is_product') || !is_product()) {
