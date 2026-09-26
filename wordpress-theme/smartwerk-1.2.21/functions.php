@@ -204,7 +204,7 @@ function smartwerk_logo_url(): string {
     $custom_logo_id = get_theme_mod('custom_logo');
 
     if ($custom_logo_id) {
-        $logo = wp_get_attachment_image_url($custom_logo_id, 'full');
+        $logo = wp_get_attachment_image_url($custom_logo_id, 'medium');
         if ($logo) {
             return $logo;
         }
@@ -1348,6 +1348,97 @@ function smartwerk_late_product_performance_scope(): void {
 add_action('wp_print_styles', 'smartwerk_late_product_performance_scope', PHP_INT_MAX);
 add_action('wp_print_scripts', 'smartwerk_late_product_performance_scope', PHP_INT_MAX);
 add_action('wp_print_footer_scripts', 'smartwerk_late_product_performance_scope', PHP_INT_MAX);
+
+
+/* ==========================================================================
+ * SmartWerk 1.2.24 — measured single-product performance hardening.
+ * Lighthouse 12.8.2 showed WooPayments/Stripe still booting on ordinary
+ * product pages and full-size gallery originals being fetched although zoom
+ * and PhotoSwipe are disabled. Keep checkout/cart and product 783 untouched.
+ * ========================================================================== */
+
+/**
+ * Remove WooPayments frontend callbacks from ordinary single-product requests
+ * before wp_head runs. Payment gateways themselves stay enabled; cart and
+ * checkout are deliberately outside this scope.
+ */
+function smartwerk_remove_matching_hook_callbacks(string $hook_name, array $class_needles): void {
+    global $wp_filter;
+
+    if (empty($wp_filter[$hook_name]) || !($wp_filter[$hook_name] instanceof WP_Hook)) {
+        return;
+    }
+
+    foreach ($wp_filter[$hook_name]->callbacks as $priority => $callbacks) {
+        foreach ($callbacks as $callback_data) {
+            $callback = $callback_data['function'] ?? null;
+            $class = '';
+
+            if (is_array($callback) && isset($callback[0])) {
+                $class = is_object($callback[0]) ? get_class($callback[0]) : (string) $callback[0];
+            } elseif (is_string($callback) && str_contains($callback, '::')) {
+                $class = strstr($callback, '::', true) ?: '';
+            }
+
+            foreach ($class_needles as $needle) {
+                if ($class !== '' && stripos($class, $needle) !== false) {
+                    remove_action($hook_name, $callback, (int) $priority);
+                    break;
+                }
+            }
+        }
+    }
+}
+
+function smartwerk_disable_wcpay_product_bootstrap(): void {
+    if (!function_exists('is_product') || !is_product() || smartwerk_is_wp3dprinting_context()) {
+        return;
+    }
+
+    $classes = ['WC_Payments', 'WCPay', 'WooPay'];
+
+    foreach ([
+        'wp_enqueue_scripts',
+        'wp_head',
+        'wp_footer',
+        'wp_print_footer_scripts',
+        'woocommerce_single_product_summary',
+        'woocommerce_after_add_to_cart_form',
+    ] as $hook_name) {
+        smartwerk_remove_matching_hook_callbacks($hook_name, $classes);
+    }
+}
+add_action('wp', 'smartwerk_disable_wcpay_product_bootstrap', 1);
+
+/**
+ * Zoom and PhotoSwipe are already disabled on ordinary product pages, so
+ * referencing the original multi-megabyte gallery files has no user-facing
+ * benefit. Keep WooCommerce's responsive medium_large image as both visible
+ * and "full" gallery source. Product 783 retains the plugin's own behaviour.
+ */
+function smartwerk_product_gallery_full_size($size) {
+    if (function_exists('is_product') && is_product() && !smartwerk_is_wp3dprinting_context()) {
+        return 'medium_large';
+    }
+
+    return $size;
+}
+add_filter('woocommerce_gallery_full_size', 'smartwerk_product_gallery_full_size', 20);
+
+/**
+ * The header renders the logo at a maximum of 160px. Prefer WordPress'
+ * generated medium derivative for custom logos instead of transferring the
+ * 512px source on every page. The fallback URL remains unchanged.
+ */
+function smartwerk_logo_url_optimized(string $url): string {
+    $custom_logo_id = (int) get_theme_mod('custom_logo');
+    if ($custom_logo_id <= 0) {
+        return $url;
+    }
+
+    $medium = wp_get_attachment_image_url($custom_logo_id, 'medium');
+    return $medium ?: $url;
+}
 
 
 
