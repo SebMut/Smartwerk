@@ -132,6 +132,17 @@
     }
   }
 
+  function hasExistingWooCommerceCartState() {
+    const cookies = document.cookie || '';
+
+    if (/woocommerce_items_in_cart=([1-9][0-9]*)/.test(cookies)) return true;
+    if (/woocommerce_cart_hash=[^;]+/.test(cookies)) return true;
+    if (/wp_woocommerce_session_[^=]+=[^;]+/.test(cookies)) return true;
+
+    return document.body.classList.contains('woocommerce-cart') ||
+      document.body.classList.contains('woocommerce-checkout');
+  }
+
   function setupCartCountSync() {
     if (!document.querySelector('[data-cart-count]')) return;
 
@@ -145,6 +156,11 @@
         () => window.setTimeout(refreshCartCount, 0)
       );
     }
+
+    // A brand-new anonymous visitor must not call the Store API just to paint
+    // the shared header. That request can create a WooCommerce session and make
+    // an otherwise cacheable product page bypass the full-page cache.
+    if (!hasExistingWooCommerceCartState()) return;
 
     const refreshWhenIdle = () => refreshCartCount();
     if ('requestIdleCallback' in window) {
