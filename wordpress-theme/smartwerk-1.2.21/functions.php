@@ -1568,3 +1568,84 @@ function smartwerk_ensure_native_product_schema(): void {
     }
 }
 add_action('woocommerce_after_single_product', 'smartwerk_ensure_native_product_schema', 99);
+
+
+/**
+ * SmartWerk 1.2.26 — lightweight native consent UI.
+ * CookieYes remains the authority while its plugin is active. Once CookieYes
+ * is deactivated, this native banner takes over automatically, avoiding a
+ * duplicate banner during migration.
+ */
+function smartwerk_cookieyes_active(): bool {
+    if (!function_exists('is_plugin_active')) {
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    }
+
+    foreach ([
+        'cookie-law-info/cookie-law-info.php',
+        'cookieyes-cookie-consent/cookieyes-cookie-consent.php',
+    ] as $plugin) {
+        if (function_exists('is_plugin_active') && is_plugin_active($plugin)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function smartwerk_native_consent_enabled(): bool {
+    return !smartwerk_cookieyes_active();
+}
+
+function smartwerk_native_consent_markup(): void {
+    if (!smartwerk_native_consent_enabled()) {
+        return;
+    }
+
+    $privacy_url = get_privacy_policy_url();
+    ?>
+    <div class="sw-consent" data-sw-consent hidden>
+        <div class="sw-consent__backdrop" data-sw-consent-backdrop></div>
+        <section class="sw-consent__panel" role="dialog" aria-modal="true" aria-labelledby="sw-consent-title" aria-describedby="sw-consent-text">
+            <button class="sw-consent__close" type="button" data-sw-consent-essential aria-label="Nur notwendige Cookies verwenden">×</button>
+            <div class="sw-consent__content">
+                <h2 id="sw-consent-title">Wir verwenden Cookies</h2>
+                <p id="sw-consent-text">Wir verwenden notwendige Cookies, damit diese Website und der Shop funktionieren. Optionale Dienste werden nur mit deiner Zustimmung aktiviert.</p>
+                <?php if ($privacy_url) : ?>
+                    <p class="sw-consent__privacy"><a href="<?php echo esc_url($privacy_url); ?>">Mehr zum Datenschutz</a></p>
+                <?php endif; ?>
+            </div>
+            <div class="sw-consent__actions">
+                <button class="sw-consent__button sw-consent__button--primary" type="button" data-sw-consent-all>Alle akzeptieren</button>
+                <button class="sw-consent__button" type="button" data-sw-consent-essential>Nur notwendige</button>
+                <button class="sw-consent__link" type="button" data-sw-consent-settings>Einstellungen</button>
+            </div>
+            <div class="sw-consent__settings" data-sw-consent-settings-panel hidden>
+                <div class="sw-consent__setting">
+                    <div><strong>Notwendig</strong><span>Für Grundfunktionen, Warenkorb und Checkout.</span></div>
+                    <span class="sw-consent__always">Immer aktiv</span>
+                </div>
+                <label class="sw-consent__setting">
+                    <div><strong>Statistik</strong><span>Hilft uns zu verstehen, wie die Website genutzt wird.</span></div>
+                    <input type="checkbox" data-sw-consent-category="analytics">
+                </label>
+                <label class="sw-consent__setting">
+                    <div><strong>Marketing</strong><span>Erlaubt optionale Marketing-Dienste.</span></div>
+                    <input type="checkbox" data-sw-consent-category="marketing">
+                </label>
+                <button class="sw-consent__button sw-consent__button--primary" type="button" data-sw-consent-save>Auswahl speichern</button>
+            </div>
+        </section>
+    </div>
+    <?php
+}
+add_action('wp_footer', 'smartwerk_native_consent_markup', 5);
+
+function smartwerk_consent_settings_link(): void {
+    if (!smartwerk_native_consent_enabled()) {
+        return;
+    }
+
+    echo '<button type="button" class="sw-consent-manage" data-sw-consent-manage>Cookie-Einstellungen</button>';
+}
+add_action('wp_footer', 'smartwerk_consent_settings_link', 6);
