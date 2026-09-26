@@ -16,7 +16,7 @@
         <nav class="footer-services" aria-label="<?php esc_attr_e('SmartWerk Leistungen', 'smartwerk'); ?>">
             <span><?php esc_html_e('Leistungen', 'smartwerk'); ?></span>
             <a href="<?php echo esc_url(home_url('/3d-druck-bestellen/#konfigurator')); ?>">3D-Druck</a>
-            <a href="<?php echo esc_url(home_url('/individuelle-anfertigung/')); ?>">Individuelle Fertigung</a>
+            <a href="<?php echo esc_url(home_url('/3d-druck-bestellen/#individuell')); ?>">Individuelle Fertigung</a>
             <a href="<?php echo esc_url(home_url('/smartwerk-shop/')); ?>">Shop</a>
         </nav>
     </div>
