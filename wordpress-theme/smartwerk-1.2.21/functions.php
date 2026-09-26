@@ -265,6 +265,7 @@ function smartwerk_primary_fallback(): void {
     $current = smartwerk_page_key();
 
     echo '<ul class="desktop-menu smartwerk-fallback-menu">';
+    echo smartwerk_fallback_desktop_home_item(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
     foreach (smartwerk_primary_items() as $item) {
         $link_classes = trim($item['class'] . ' ' . ($current === $item['key'] ? 'is-active' : ''));
@@ -1649,3 +1650,116 @@ function smartwerk_consent_settings_link(): void {
     echo '<button type="button" class="sw-consent-manage" data-sw-consent-manage>Cookie-Einstellungen</button>';
 }
 add_action('wp_footer', 'smartwerk_consent_settings_link', 6);
+
+
+/* ==========================================================================
+ * SmartWerk 1.2.30 — CI-preserving navigation refresh
+ * ========================================================================== */
+
+/**
+ * Ensure "Home" is present at the beginning of the registered primary menu.
+ * This affects the desktop navigation (and the legacy mobile drawer if it is
+ * ever shown) without requiring a manual WordPress menu edit.
+ */
+function smartwerk_add_home_to_primary_menu(string $items, $args): string {
+    if (empty($args->theme_location) || $args->theme_location !== 'primary') {
+        return $items;
+    }
+
+    $home_url = home_url('/');
+    if (str_contains($items, 'smartwerk-home-menu-item')) {
+        return $items;
+    }
+
+    $current_class = is_front_page() ? ' current-menu-item' : '';
+
+    $home_item = sprintf(
+        '<li class="menu-item smartwerk-home-menu-item%1$s"><a href="%2$s"%3$s>Home</a></li>',
+        esc_attr($current_class),
+        esc_url($home_url),
+        is_front_page() ? ' aria-current="page"' : ''
+    );
+
+    return $home_item . $items;
+}
+add_filter('wp_nav_menu_items', 'smartwerk_add_home_to_primary_menu', 10, 2);
+
+/**
+ * Also add Home to the theme fallback desktop menu when no WordPress menu is
+ * assigned. The five existing SmartWerk sections remain unchanged.
+ */
+function smartwerk_fallback_desktop_home_item(): string {
+    $class = is_front_page() ? ' class="is-active" aria-current="page"' : '';
+    return sprintf(
+        '<li class="menu-item smartwerk-home-menu-item"><a href="%1$s"%2$s>Home</a></li>',
+        esc_url(home_url('/')),
+        $class
+    );
+}
+
+/**
+ * Etsy-inspired navigation pattern, SmartWerk content and CI.
+ * The bar is global on mobile and uses only the site's real primary sections.
+ */
+function smartwerk_mobile_bottom_navigation(): void {
+    if (is_admin()) {
+        return;
+    }
+
+    $current = smartwerk_page_key();
+
+    if (function_exists('is_product') && (is_product() || is_product_category())) {
+        $current = 'shop';
+    }
+
+    $items = [
+        [
+            'label' => '3D-Druck',
+            'url'   => home_url('/3d-druck-bestellen/'),
+            'key'   => '3d-druck',
+            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.8 7v8L12 21l7.2-6V7z"/><path d="m4.8 7 7.2 5 7.2-5M12 12v9"/></svg>',
+        ],
+        [
+            'label' => 'Individuell',
+            'url'   => home_url('/individuelle-anfertigung/'),
+            'key'   => 'individuell',
+            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.3-1 10.8-10.8a2.1 2.1 0 0 0-3-3L5.3 16z"/><path d="m14.8 6.5 3 3"/></svg>',
+        ],
+        [
+            'label' => 'Shop',
+            'url'   => home_url('/smartwerk-shop/'),
+            'key'   => 'shop',
+            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M8.5 8a3.5 3.5 0 0 1 7 0"/></svg>',
+        ],
+        [
+            'label' => 'Projekte',
+            'url'   => home_url('/projekte/'),
+            'key'   => 'projekte',
+            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>',
+        ],
+        [
+            'label' => 'Wissen & STL',
+            'url'   => home_url('/stl-dateien/'),
+            'key'   => 'stl-dateien',
+            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5A3.5 3.5 0 0 1 8 4h4v16H8a3.5 3.5 0 0 0-3.5 1z"/><path d="M19.5 5.5A3.5 3.5 0 0 0 16 4h-4v16h4a3.5 3.5 0 0 1 3.5 1z"/></svg>',
+        ],
+    ];
+
+    echo '<nav class="smartwerk-mobile-bottom-nav" aria-label="SmartWerk Hauptnavigation">';
+
+    foreach ($items as $item) {
+        $active = $current === $item['key'];
+
+        printf(
+            '<a class="smartwerk-mobile-bottom-nav__item%1$s" href="%2$s"%3$s>%4$s<span>%5$s</span></a>',
+            $active ? ' is-active' : '',
+            esc_url($item['url']),
+            $active ? ' aria-current="page"' : '',
+            $item['icon'], // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+            esc_html($item['label'])
+        );
+    }
+
+    echo '</nav>';
+}
+add_action('wp_footer', 'smartwerk_mobile_bottom_navigation', 40);
