@@ -1045,12 +1045,8 @@ add_action('init', 'smartwerk_seo_head_cleanup', 30);
 function smartwerk_page_seo_map(): array {
     return [
         1636 => [
-            'title' => '3D-Druck online bestellen | SmartWerk',
-            'description' => '3D-Modell hochladen, Druck konfigurieren und individuellen 3D-Druck bei SmartWerk aus Feldkirchen bei München kalkulieren.',
-        ],
-        1638 => [
-            'title' => 'Individuelle 3D-Druck Anfertigung | SmartWerk',
-            'description' => 'Individuelle 3D-Druck-Lösung nach Idee, Skizze, Foto, Muster oder Maßen – von der Abstimmung bis zum fertigen Bauteil.',
+            'title' => '3D-Druck nach Datei oder Idee | SmartWerk',
+            'description' => '3D-Druck bei SmartWerk: fertige 3D-Datei direkt kalkulieren oder mit Idee, Skizze, Foto, Muster oder Maßen individuell starten.',
         ],
         1640 => [
             'title' => '3D-Druck Wissen & STL-Dateien | SmartWerk',
@@ -1507,7 +1503,7 @@ function smartwerk_exclude_utility_pages_from_sitemap(array $args, string $post_
         return $args;
     }
 
-    $exclude  = [11, 12, 13, 14, 145, 1628];
+    $exclude  = [11, 12, 13, 14, 145, 1628, 1638];
     $existing = isset($args['post__not_in']) ? (array) $args['post__not_in'] : [];
     $args['post__not_in'] = array_values(array_unique(array_merge($existing, $exclude)));
 
@@ -1527,6 +1523,11 @@ function smartwerk_redirect_legacy_pages(): void {
 
     if (is_page([11, 145])) {
         wp_safe_redirect(home_url('/3d-druck-bestellen/'), 301);
+        exit;
+    }
+
+    if (is_page(1638)) {
+        wp_safe_redirect(home_url('/3d-druck-bestellen/#individuell'), 301);
         exit;
     }
 }
