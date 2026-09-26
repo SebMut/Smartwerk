@@ -42,7 +42,7 @@ jobs:
           grep -q "if (!hasExistingWooCommerceCartState()) return;" "$THEME/assets/js/theme.js"
           grep -q "smartwerk_mobile_bottom_navigation" "$THEME/functions.php"
           grep -q "smartwerk_add_home_to_primary_menu" "$THEME/functions.php"
-          grep -q "SMARTWERK 1.2.31 — CI MOBILE BOTTOM NAVIGATION" "$THEME/style.css"
+          grep -q "SMARTWERK 1.2.30 — CI MOBILE BOTTOM NAVIGATION" "$THEME/style.css"
           grep -q "sw-consent__panel" "$THEME/style.css"
           ! grep -q "add_theme_support('wc-product-gallery-zoom')" "$THEME/functions.php"
           ! grep -q "add_theme_support('wc-product-gallery-lightbox')" "$THEME/functions.php"
