@@ -574,51 +574,38 @@
 
 
   function setupEtsyInspiredShop() {
-    if (!document.body.classList.contains('page-id-1657')) return;
+    const isShop =
+      document.body.classList.contains('page-id-1657') ||
+      document.body.dataset.page === 'shop' ||
+      document.body.classList.contains('post-type-archive-product');
+
+    if (!isShop) return;
 
     document.body.classList.add('sw-etsy-shop-ui');
 
-    const hero = document.querySelector('.sw-shop-hero-inner');
-    const title = document.querySelector('.sw-shop-hero h1');
     const controls = document.querySelector('[data-smartwerk-shop-filters]');
     const sourceSearch = controls?.querySelector('[data-shop-search]');
-    const grid = document.querySelector('.sw-shop-products ul.products');
-    if (!hero || !grid) return;
+    const appSearch = document.querySelector('[data-sw-etsy-mobile-search]');
+    const grid = document.querySelector('.sw-shop-products ul.products, .woocommerce ul.products');
+    const tabs = document.querySelector('.sw-etsy-tabs');
 
-    if (title) {
-      title.dataset.originalTitle = title.textContent || '';
-      title.textContent = 'Inspiration zum Greifen nah';
+    if (sourceSearch && appSearch) {
+      appSearch.value = sourceSearch.value || '';
+      appSearch.addEventListener('input', () => {
+        sourceSearch.value = appSearch.value;
+        sourceSearch.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+
+      sourceSearch.addEventListener('input', () => {
+        if (appSearch.value !== sourceSearch.value) appSearch.value = sourceSearch.value;
+      });
     }
 
-    if (!hero.querySelector('.sw-etsy-search')) {
-      const searchWrap = document.createElement('label');
-      searchWrap.className = 'sw-etsy-search';
-      searchWrap.innerHTML =
-        '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg>' +
-        '<span class="screen-reader-text">Produkte suchen</span>' +
-        '<input type="search" class="sw-etsy-search__input" placeholder="Suche etwas Besonderes" autocomplete="off">';
-      hero.insertAdjacentElement('afterbegin', searchWrap);
+    if (!grid) return;
 
-      const appSearch = searchWrap.querySelector('input');
-      if (sourceSearch && appSearch) {
-        appSearch.value = sourceSearch.value || '';
-        appSearch.addEventListener('input', () => {
-          sourceSearch.value = appSearch.value;
-          sourceSearch.dispatchEvent(new Event('input', { bubbles: true }));
-        });
-      }
-    }
-
-    if (!hero.querySelector('.sw-etsy-tabs')) {
-      const tabs = document.createElement('div');
-      tabs.className = 'sw-etsy-tabs';
-      tabs.setAttribute('role', 'tablist');
-      tabs.innerHTML =
-        '<button type="button" class="is-active" role="tab" aria-selected="true" data-sw-etsy-tab="for-you">Für dich</button>' +
-        '<button type="button" role="tab" aria-selected="false" data-sw-etsy-tab="new">Neue Schätze</button>';
-      title?.insertAdjacentElement('afterend', tabs);
-
+    if (tabs) {
       const originalOrder = [...grid.children];
+
       tabs.addEventListener('click', event => {
         const button = event.target.closest('[data-sw-etsy-tab]');
         if (!button) return;
