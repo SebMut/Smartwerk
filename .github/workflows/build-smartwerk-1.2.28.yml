@@ -3,7 +3,7 @@ name: Build SmartWerk Theme 1.2.28
 on:
   push:
     branches:
-      - smartwerk-theme-1.2.28-cart-api-cache-fix
+      - smartwerk-theme-1.2.28-etsy-mobile-shop
     paths:
       - 'wordpress-theme/smartwerk-1.2.21/**'
       - '.github/workflows/build-smartwerk-1.2.28.yml'
