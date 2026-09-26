@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.33
+Version: 1.2.34
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -7266,5 +7266,76 @@ body[data-page="home"] .smartwerk-benefit-item>span{
 
   body[data-page="home"] .smartwerk-benefit-item:last-child{
     border-bottom:0;
+  }
+}
+
+
+/* ==========================================================================
+   SMARTWERK 1.2.34 — COMPACT HERO BENEFITS
+   ========================================================================== */
+
+body[data-page="home"] .hero-mini-benefits{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px 10px;
+  margin-top:14px;
+  max-width:680px;
+}
+
+body[data-page="home"] .hero-mini-benefits span{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  min-width:0;
+  padding:7px 9px;
+  border:1px solid rgba(13,135,144,.13);
+  border-radius:10px;
+  background:rgba(255,255,255,.78);
+  color:#425155;
+  font-size:.68rem;
+  line-height:1.2;
+  font-weight:800;
+}
+
+body[data-page="home"] .hero-mini-benefits i{
+  display:grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  flex:0 0 22px;
+  border-radius:7px;
+  background:#eaf7f7;
+  color:var(--primary);
+  font:900 .7rem/1 inherit;
+  font-style:normal;
+}
+
+@media(max-width:760px){
+  body[data-page="home"] .hero-mini-benefits{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:6px;
+    margin-top:12px;
+  }
+
+  body[data-page="home"] .hero-mini-benefits span{
+    padding:6px 7px;
+    border-radius:9px;
+    font-size:.62rem;
+  }
+
+  body[data-page="home"] .hero-mini-benefits i{
+    width:20px;
+    height:20px;
+    flex-basis:20px;
+  }
+}
+
+@media(max-width:390px){
+  body[data-page="home"] .hero-mini-benefits{
+    grid-template-columns:1fr 1fr;
+  }
+
+  body[data-page="home"] .hero-mini-benefits span{
+    font-size:.59rem;
   }
 }
