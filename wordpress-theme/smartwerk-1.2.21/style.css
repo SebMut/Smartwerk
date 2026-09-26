@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.25
+Version: 1.2.26
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -6464,3 +6464,29 @@ body.single-product.smartwerk-theme .smartwerk-product-links a:hover{
     margin-bottom:18px
   }
 }
+
+
+/* SmartWerk 1.2.26 native consent — compact CookieYes-like bottom card */
+.sw-consent[hidden],.sw-consent__settings[hidden]{display:none!important}
+.sw-consent{position:fixed;inset:0;z-index:999999;display:flex;align-items:flex-end;justify-content:center;padding:18px;pointer-events:none}
+.sw-consent__backdrop{position:absolute;inset:0;background:rgba(18,24,22,.18);pointer-events:auto}
+.sw-consent__panel{position:relative;width:min(100%,620px);margin:0 auto;background:#fff;color:#202724;border-radius:12px;box-shadow:0 12px 42px rgba(0,0,0,.18);padding:24px;pointer-events:auto;font:inherit}
+.sw-consent__content{padding-right:26px}
+.sw-consent__content h2{margin:0 0 8px;font-size:20px;line-height:1.25}
+.sw-consent__content p{margin:0 0 10px;font-size:14px;line-height:1.55}
+.sw-consent__privacy a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.sw-consent__close{position:absolute;right:14px;top:10px;border:0;background:transparent;font-size:26px;line-height:1;cursor:pointer;color:#4c5551}
+.sw-consent__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.sw-consent__button{min-height:44px;border:1px solid #1f6f5c;border-radius:7px;background:#fff;color:#195b4d;font-weight:700;padding:10px 14px;cursor:pointer}
+.sw-consent__button--primary{background:#1f6f5c;color:#fff}
+.sw-consent__link{grid-column:1/-1;border:0;background:transparent;color:#38443f;text-decoration:underline;text-underline-offset:2px;padding:5px;cursor:pointer}
+.sw-consent__settings{border-top:1px solid #e4e8e6;margin-top:16px;padding-top:8px}
+.sw-consent__setting{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:11px 0;border-bottom:1px solid #edf0ee}
+.sw-consent__setting div{display:grid;gap:2px}
+.sw-consent__setting span{font-size:12px;color:#69736f}
+.sw-consent__setting input{width:20px;height:20px;accent-color:#1f6f5c}
+.sw-consent__always{white-space:nowrap}
+.sw-consent__settings>.sw-consent__button{width:100%;margin-top:14px}
+.sw-consent-manage{position:fixed;left:12px;bottom:12px;z-index:99990;border:1px solid #d9dfdc;border-radius:999px;background:#fff;color:#303a36;padding:7px 11px;font:600 11px/1.2 inherit;box-shadow:0 4px 18px rgba(0,0,0,.1);cursor:pointer}
+.sw-consent-open{overflow:hidden}
+@media(max-width:640px){.sw-consent{padding:10px}.sw-consent__panel{padding:20px 16px 16px;border-radius:11px}.sw-consent__actions{grid-template-columns:1fr}.sw-consent__link{grid-column:auto}.sw-consent__setting{align-items:flex-start}.sw-consent-manage{left:8px;bottom:8px}}
