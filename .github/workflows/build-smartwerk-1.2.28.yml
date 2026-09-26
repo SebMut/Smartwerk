@@ -1,0 +1,91 @@
+name: Build SmartWerk Theme 1.2.28
+
+on:
+  push:
+    branches:
+      - smartwerk-theme-1.2.28-cart-api-cache-fix
+    paths:
+      - 'wordpress-theme/smartwerk-1.2.21/**'
+      - '.github/workflows/build-smartwerk-1.2.28.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare 1.2.28 build tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf build
+          mkdir -p build
+          cp -a wordpress-theme/smartwerk-1.2.21 build/smartwerk-1.2.28
+          THEME="build/smartwerk-1.2.28"
+          grep -q "Version: 1.2.28" "$THEME/style.css"
+          grep -q "smartwerk_preload_product_lcp_image" "$THEME/functions.php"
+          grep -q "imagesizes" "$THEME/functions.php"
+          ! grep -q "fonts.googleapis.com" "$THEME/functions.php"
+          ! grep -q "fonts.gstatic.com" "$THEME/functions.php"
+          ! grep -q "Manrope" "$THEME/style.css"
+          grep -q "wc-product-gallery-slider" "$THEME/functions.php"
+          grep -q "smartwerk_disable_wcpay_product_bootstrap" "$THEME/functions.php"
+          grep -q "woocommerce_gallery_full_size" "$THEME/functions.php"
+          grep -q "smartwerk_native_consent_markup" "$THEME/functions.php"
+          grep -q "setupNativeConsent" "$THEME/assets/js/theme.js"
+          grep -q "hasExistingWooCommerceCartState" "$THEME/assets/js/theme.js"
+          grep -q "if (!hasExistingWooCommerceCartState()) return;" "$THEME/assets/js/theme.js"
+          grep -q "setupEtsyInspiredShop" "$THEME/assets/js/theme.js"
+          grep -q "sw-etsy-mobile-nav" "$THEME/functions.php"
+          grep -q "SMARTWERK 1.2.28 — ETSY-INSPIRED MOBILE SHOP" "$THEME/style.css"
+          grep -q "sw-consent__panel" "$THEME/style.css"
+          ! grep -q "add_theme_support('wc-product-gallery-zoom')" "$THEME/functions.php"
+          ! grep -q "add_theme_support('wc-product-gallery-lightbox')" "$THEME/functions.php"
+
+      - name: PHP lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          find build/smartwerk-1.2.28 -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: JavaScript syntax check
+        shell: bash
+        run: node --check build/smartwerk-1.2.28/assets/js/theme.js
+
+      - name: Build production minified assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="build/smartwerk-1.2.28"
+          mkdir -p "$THEME/assets/css"
+          npx --yes clean-css-cli@5.6.3 -o "$THEME/assets/css/theme.min.css" "$THEME/style.css"
+          npx --yes terser@5.44.0 "$THEME/assets/js/theme.js" -c -m -o "$THEME/assets/js/theme.min.js"
+          test -s "$THEME/assets/css/theme.min.css"
+          test -s "$THEME/assets/js/theme.min.js"
+          node --check "$THEME/assets/js/theme.min.js"
+
+      - name: Package theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd build
+          zip -r ../dist/smartwerk-theme-1.2.28.zip smartwerk-1.2.28 -x '*.DS_Store'
+          cd ..
+          unzip -t dist/smartwerk-theme-1.2.28.zip
+          unzip -l dist/smartwerk-theme-1.2.28.zip | grep -q 'smartwerk-1.2.28/style.css'
+          unzip -l dist/smartwerk-theme-1.2.28.zip | grep -q 'smartwerk-1.2.28/assets/css/theme.min.css'
+          unzip -l dist/smartwerk-theme-1.2.28.zip | grep -q 'smartwerk-1.2.28/assets/js/theme.min.js'
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartwerk-theme-1.2.28
+          path: dist/smartwerk-theme-1.2.28.zip
+          if-no-files-found: error
+          retention-days: 30
