@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.27
+Version: 1.2.28
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -6490,3 +6490,441 @@ body.single-product.smartwerk-theme .smartwerk-product-links a:hover{
 .sw-consent-manage{position:fixed;left:12px;bottom:12px;z-index:99990;border:1px solid #d9dfdc;border-radius:999px;background:#fff;color:#303a36;padding:7px 11px;font:600 11px/1.2 inherit;box-shadow:0 4px 18px rgba(0,0,0,.1);cursor:pointer}
 .sw-consent-open{overflow:hidden}
 @media(max-width:640px){.sw-consent{padding:10px}.sw-consent__panel{padding:20px 16px 16px;border-radius:11px}.sw-consent__actions{grid-template-columns:1fr}.sw-consent__link{grid-column:auto}.sw-consent__setting{align-items:flex-start}.sw-consent-manage{left:8px;bottom:8px}}
+
+
+/* ==========================================================================
+   SMARTWERK 1.2.28 — ETSY-INSPIRED MOBILE SHOP
+   Mobile presentation layer only. WooCommerce remains the commerce engine.
+   ========================================================================== */
+
+.sw-etsy-mobile-nav{display:none}
+
+@media(max-width:700px){
+  body.page-id-1657.sw-etsy-shop-ui{
+    background:#1b181d;
+    color:#f7f3f7;
+    padding-bottom:108px;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .site-header,
+  body.page-id-1657.sw-etsy-shop-ui .site-footer{
+    display:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-page,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-catalog{
+    background:#1b181d!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero{
+    padding:20px 0 10px!important;
+    border:0!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero-inner{
+    width:calc(100% - 28px)!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    gap:0!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero-inner > *{
+    min-width:0;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero .sw-kicker,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero p,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero-action,
+  body.page-id-1657.sw-etsy-shop-ui .smartwerk-shop-category-nav,
+  body.page-id-1657.sw-etsy-shop-ui .smartwerk-shop-filters,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-toolbar{
+    display:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-search{
+    order:-20;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    height:58px;
+    margin:0 0 28px;
+    padding:0 18px;
+    border:1px solid #675d6b;
+    border-radius:32px;
+    background:#332d37;
+    color:#fff;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-search svg{
+    flex:0 0 27px;
+    width:27px;
+    height:27px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.6;
+    stroke-linecap:round;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-search__input{
+    width:100%;
+    min-width:0;
+    height:100%;
+    padding:0;
+    border:0;
+    outline:0;
+    background:transparent;
+    color:#fff;
+    font:500 18px/1.2 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    appearance:none;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-search__input::placeholder{
+    color:#f8f3f8;
+    opacity:1;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-hero h1{
+    order:-10;
+    max-width:100%;
+    margin:0 0 24px!important;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(2.25rem,9.2vw,3rem)!important;
+    font-weight:500!important;
+    line-height:1.03!important;
+    letter-spacing:-.03em!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-tabs{
+    order:-5;
+    display:flex;
+    gap:34px;
+    width:100%;
+    margin:0 0 18px;
+    border-bottom:1px solid #655e68;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-tabs button{
+    position:relative;
+    min-height:46px;
+    padding:0 0 14px;
+    border:0;
+    background:transparent;
+    color:#bdb4bf;
+    font:700 18px/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    cursor:pointer;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-tabs button.is-active{
+    color:#fff;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-tabs button.is-active::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:-1px;
+    width:94px;
+    height:4px;
+    border-radius:4px 4px 0 0;
+    background:#ff6422;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-catalog{
+    padding:2px 0 122px!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products{
+    width:calc(100% - 28px)!important;
+    margin-inline:auto!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products .woocommerce ul.products{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:18px 10px!important;
+    margin:0!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products .woocommerce ul.products li.product{
+    position:relative;
+    float:none!important;
+    width:auto!important;
+    min-width:0;
+    margin:0!important;
+    overflow:visible!important;
+    border:0!important;
+    border-radius:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product > a.woocommerce-LoopProduct-link,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product > a.woocommerce-loop-product__link{
+    display:block;
+    color:#fff;
+    text-decoration:none;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products .woocommerce ul.products li.product a img{
+    display:block;
+    width:100%!important;
+    height:auto!important;
+    margin:0!important;
+    aspect-ratio:4/5!important;
+    object-fit:cover!important;
+    border-radius:9px!important;
+    background:#2a252d!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products .woocommerce ul.products li.product .woocommerce-loop-product__title{
+    display:-webkit-box;
+    overflow:hidden;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:1;
+    margin:9px 40px 2px 0!important;
+    padding:0!important;
+    color:#f8f5f8!important;
+    font-size:16px!important;
+    line-height:1.25!important;
+    font-weight:500!important;
+    letter-spacing:0!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products .woocommerce ul.products li.product .price{
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:6px;
+    min-height:22px;
+    margin:0 40px 0 0!important;
+    color:#a5d85a!important;
+    font-size:16px!important;
+    line-height:1.2!important;
+    font-weight:700!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product .price del{
+    color:#b7afb9!important;
+    opacity:.85!important;
+    font-size:14px!important;
+    font-weight:500!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product .price ins{
+    color:#a5d85a!important;
+    text-decoration:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product > .button,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product .added_to_cart{
+    display:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product > a.woocommerce-LoopProduct-link::after,
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-products li.product > a.woocommerce-loop-product__link::after{
+    top:8px!important;
+    right:auto!important;
+    left:8px!important;
+    max-width:112px!important;
+    width:auto!important;
+    min-height:24px!important;
+    padding:4px 7px!important;
+    border:0!important;
+    border-radius:999px!important;
+    background:rgba(34,31,36,.78)!important;
+    color:#fff!important;
+    font-size:8.5px!important;
+    line-height:1.05!important;
+    font-weight:800!important;
+    white-space:normal!important;
+    backdrop-filter:blur(8px);
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-favorite{
+    position:absolute;
+    z-index:8;
+    top:9px;
+    right:9px;
+    display:grid;
+    place-items:center;
+    width:42px;
+    height:42px;
+    padding:0;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.96);
+    color:#29242b;
+    box-shadow:0 2px 7px rgba(0,0,0,.16);
+    cursor:pointer;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-favorite svg{
+    width:25px;
+    height:25px;
+    overflow:visible;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-favorite path{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-favorite.is-active{
+    color:#f1641e;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-favorite.is-active path{
+    fill:#f1641e;
+    stroke:#f1641e;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-more{
+    position:absolute;
+    right:0;
+    bottom:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    width:36px;
+    height:48px;
+    padding:0;
+    border:0;
+    border-radius:4px;
+    background:#48434b;
+    cursor:pointer;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-more span{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#fff;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-more.is-copied::after{
+    content:"Kopiert";
+    position:absolute;
+    right:0;
+    bottom:54px;
+    padding:5px 8px;
+    border-radius:6px;
+    background:#fff;
+    color:#1b181d;
+    font-size:11px;
+    font-weight:700;
+    white-space:nowrap;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-favorite-filter-hidden{
+    display:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-custom{
+    padding:28px 0 128px!important;
+    background:#1b181d!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-custom-inner{
+    width:calc(100% - 28px)!important;
+    padding:20px!important;
+    border:1px solid #3b353e!important;
+    border-radius:12px!important;
+    background:#242027!important;
+    color:#fff!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-shop-custom-inner p{
+    color:#c9c0cb!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav{
+    position:fixed;
+    z-index:99980;
+    left:12px;
+    right:12px;
+    bottom:max(8px,env(safe-area-inset-bottom));
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    align-items:center;
+    min-height:78px;
+    padding:5px 7px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:34px;
+    background:rgba(31,28,32,.96);
+    box-shadow:0 10px 32px rgba(0,0,0,.36);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav__item{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    min-width:0;
+    min-height:65px;
+    padding:7px 3px;
+    border:0;
+    border-radius:28px;
+    background:transparent;
+    color:#eee9ef;
+    font:600 11px/1.1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    text-decoration:none;
+    cursor:pointer;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav__item svg{
+    width:27px;
+    height:27px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav__item.is-active{
+    background:#202b18;
+    color:#fff;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav__item[data-sw-etsy-favorites-filter][aria-pressed="true"]{
+    color:#f1641e;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav__cart .cart-count{
+    position:absolute;
+    top:4px;
+    right:12px;
+    display:grid;
+    place-items:center;
+    min-width:20px;
+    height:20px;
+    padding:0 5px;
+    border-radius:999px;
+    background:#e64b1a;
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-etsy-mobile-nav__cart .cart-count[hidden]{
+    display:none!important;
+  }
+
+  body.page-id-1657.sw-etsy-shop-ui .sw-consent-manage{
+    bottom:96px;
+  }
+}
