@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.22
+Version: 1.2.23
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -40,7 +40,7 @@ body{
   margin:0;
   background:var(--bg);
   color:var(--text);
-  font-family:'Manrope','Avenir Next',Arial,sans-serif;
+  font-family:'Avenir Next','Segoe UI',Arial,sans-serif;
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
