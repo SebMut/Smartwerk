@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.30
+Version: 1.2.31
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -6596,5 +6596,294 @@ body.single-product.smartwerk-theme .smartwerk-product-links a:hover{
   /* Native consent control must not sit underneath the mobile nav. */
   body.smartwerk-theme .sw-consent-manage{
     bottom:calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
+
+/* ==========================================================================
+   SMARTWERK 1.2.31 — CI SHOP CARDS / ETSY-INSPIRED MOBILE UX
+   SmartWerk colors, surfaces and typography remain authoritative.
+   ========================================================================== */
+
+.sw-card-favorite,
+.sw-card-more,
+.sw-card-action-menu{
+  display:none;
+}
+
+@media(max-width:760px){
+  /* Two-column mobile product grid inspired by marketplace browsing, but
+     retaining SmartWerk's light surfaces, borders and brand colors. */
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products,
+  body.woocommerce-shop .woocommerce ul.products,
+  body.tax-product_cat .woocommerce ul.products{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:14px 10px!important;
+    margin:0!important;
+  }
+
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products li.product,
+  body.woocommerce-shop .woocommerce ul.products li.product,
+  body.tax-product_cat .woocommerce ul.products li.product{
+    position:relative!important;
+    float:none!important;
+    width:auto!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:0 0 12px!important;
+    overflow:visible!important;
+    border:1px solid #e0e5e7!important;
+    border-radius:14px!important;
+    background:#fff!important;
+    box-shadow:0 5px 16px rgba(32,33,36,.045)!important;
+  }
+
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products li.product a img,
+  body.woocommerce-shop .woocommerce ul.products li.product a img,
+  body.tax-product_cat .woocommerce ul.products li.product a img{
+    width:100%!important;
+    height:auto!important;
+    aspect-ratio:4/5!important;
+    object-fit:cover!important;
+    margin:0!important;
+    border-radius:13px 13px 0 0!important;
+    background:#f2f4f5!important;
+  }
+
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products li.product .woocommerce-loop-product__title,
+  body.woocommerce-shop .woocommerce ul.products li.product .woocommerce-loop-product__title,
+  body.tax-product_cat .woocommerce ul.products li.product .woocommerce-loop-product__title{
+    display:-webkit-box;
+    min-height:auto!important;
+    margin:10px 38px 4px 11px!important;
+    padding:0!important;
+    overflow:hidden;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    color:#202124!important;
+    font-size:13px!important;
+    line-height:1.28!important;
+    font-weight:780!important;
+  }
+
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products li.product .price,
+  body.woocommerce-shop .woocommerce ul.products li.product .price,
+  body.tax-product_cat .woocommerce ul.products li.product .price{
+    display:flex!important;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:4px;
+    margin:0 38px 4px 11px!important;
+    padding:0!important;
+    color:#123f43!important;
+    font-size:13.5px!important;
+    line-height:1.2!important;
+    font-weight:900!important;
+  }
+
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products li.product .price del,
+  body.woocommerce-shop .woocommerce ul.products li.product .price del,
+  body.tax-product_cat .woocommerce ul.products li.product .price del{
+    color:#7a8589!important;
+    font-size:11px!important;
+    font-weight:600!important;
+    opacity:.78!important;
+  }
+
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products li.product .wc-gzd-additional-info,
+  body.woocommerce-shop .woocommerce ul.products li.product .wc-gzd-additional-info,
+  body.tax-product_cat .woocommerce ul.products li.product .wc-gzd-additional-info{
+    margin:0 38px 0 11px!important;
+    color:#7a8589!important;
+    font-size:9px!important;
+    line-height:1.3!important;
+  }
+
+  /* The original WooCommerce button remains in the DOM and is used by the
+     action menu. It is hidden visually only on compact product cards. */
+  body.page-id-1657 .sw-shop-products li.product.sw-shop-card-enhanced > .button,
+  body.page-id-1657 .sw-shop-products li.product.sw-shop-card-enhanced .added_to_cart,
+  body.woocommerce-shop li.product.sw-shop-card-enhanced > .button,
+  body.woocommerce-shop li.product.sw-shop-card-enhanced .added_to_cart,
+  body.tax-product_cat li.product.sw-shop-card-enhanced > .button,
+  body.tax-product_cat li.product.sw-shop-card-enhanced .added_to_cart{
+    position:absolute!important;
+    width:1px!important;
+    height:1px!important;
+    padding:0!important;
+    margin:-1px!important;
+    overflow:hidden!important;
+    clip:rect(0 0 0 0)!important;
+    white-space:nowrap!important;
+    border:0!important;
+  }
+
+  .sw-card-favorite{
+    position:absolute;
+    z-index:8;
+    top:9px;
+    right:9px;
+    display:grid;
+    place-items:center;
+    width:38px;
+    height:38px;
+    padding:0;
+    border:1px solid rgba(20,57,61,.09);
+    border-radius:50%;
+    background:rgba(255,255,255,.96);
+    color:#26383c;
+    box-shadow:0 3px 10px rgba(32,33,36,.12);
+    cursor:pointer;
+  }
+
+  .sw-card-favorite svg{
+    width:22px;
+    height:22px;
+  }
+
+  .sw-card-favorite path{
+    fill:none;
+    stroke:currentColor;
+    stroke-width:2.1;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .sw-card-favorite.is-active{
+    color:#0d8790;
+    background:#edf9fa;
+    border-color:#c9e9eb;
+  }
+
+  .sw-card-favorite.is-active path{
+    fill:#0d8790;
+    stroke:#0d8790;
+  }
+
+  .sw-card-more{
+    position:absolute;
+    z-index:7;
+    right:8px;
+    bottom:8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:3px;
+    width:30px;
+    height:38px;
+    padding:0;
+    border:1px solid #dce3e5;
+    border-radius:9px;
+    background:#f7f9fa;
+    color:#334044;
+    cursor:pointer;
+  }
+
+  .sw-card-more span{
+    width:4px;
+    height:4px;
+    border-radius:50%;
+    background:currentColor;
+  }
+
+  .sw-card-more.is-success{
+    background:#eaf7f7;
+    border-color:#b7dfe2;
+    color:#0d8790;
+  }
+
+  .sw-card-action-menu{
+    position:absolute;
+    z-index:30;
+    right:8px;
+    bottom:50px;
+    display:grid;
+    min-width:184px;
+    padding:6px;
+    border:1px solid #dce3e5;
+    border-radius:12px;
+    background:#fff;
+    box-shadow:0 12px 28px rgba(32,33,36,.16);
+  }
+
+  .sw-card-action-menu[hidden]{
+    display:none!important;
+  }
+
+  .sw-card-action{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    width:100%;
+    min-height:42px;
+    padding:8px 10px;
+    border:0;
+    border-radius:8px;
+    background:transparent;
+    color:#26383c;
+    font:700 12px/1.2 inherit;
+    text-align:left;
+    cursor:pointer;
+  }
+
+  .sw-card-action:hover,
+  .sw-card-action:focus-visible{
+    background:#f3f7f8;
+    outline:none;
+  }
+
+  .sw-card-action--cart{
+    color:#0d8790;
+  }
+
+  .sw-card-action svg{
+    width:19px;
+    height:19px;
+    flex:0 0 19px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.9;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .sw-card-action.is-copied{
+    color:#0d8790;
+  }
+
+  /* Keep the existing Etsy-price comparison badge, just resize it for the
+     denser two-column SmartWerk card. */
+  body.page-id-1657 .sw-shop-products li.product > a.woocommerce-LoopProduct-link::after,
+  body.page-id-1657 .sw-shop-products li.product > a.woocommerce-loop-product__link::after{
+    top:9px!important;
+    left:8px!important;
+    right:auto!important;
+    max-width:92px!important;
+    width:auto!important;
+    min-height:24px!important;
+    padding:4px 7px!important;
+    white-space:normal!important;
+    font-size:7.7px!important;
+    line-height:1.05!important;
+  }
+}
+
+@media(max-width:390px){
+  body.page-id-1657 .sw-shop-products .woocommerce ul.products,
+  body.woocommerce-shop .woocommerce ul.products,
+  body.tax-product_cat .woocommerce ul.products{
+    gap:12px 8px!important;
+  }
+
+  .sw-card-favorite{
+    width:34px;
+    height:34px;
+  }
+
+  .sw-card-favorite svg{
+    width:20px;
+    height:20px;
   }
 }
