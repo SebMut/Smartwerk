@@ -3,7 +3,7 @@ name: Build SmartWerk Theme 1.2.27
 on:
   push:
     branches:
-      - smartwerk-theme-1.2.27-native-consent
+      - smartwerk-theme-1.2.27-cart-api-cache-fix
     paths:
       - 'wordpress-theme/smartwerk-1.2.21/**'
       - '.github/workflows/build-smartwerk-1.2.27.yml'
