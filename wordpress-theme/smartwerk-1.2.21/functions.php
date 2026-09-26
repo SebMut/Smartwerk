@@ -229,14 +229,14 @@ function smartwerk_cart_url(): string {
     return home_url('/warenkorb/');
 }
 
+/**
+ * Keep the initial public HTML cacheable. Reading WC()->cart while rendering
+ * the shared header can initialize a WooCommerce customer session for a
+ * cookie-free visitor. The existing Store API sync in theme.js hydrates the
+ * real count after the page has loaded.
+ */
 function smartwerk_cart_count_markup(): string {
-    $count = smartwerk_cart_count();
-
-    return sprintf(
-        '<span class="cart-count" data-cart-count%s>%s</span>',
-        $count === 0 ? ' hidden' : '',
-        esc_html((string) $count)
-    );
+    return '<span class="cart-count" data-cart-count hidden>0</span>';
 }
 
 function smartwerk_cart_count_fragment(array $fragments): array {
