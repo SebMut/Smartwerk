@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.27
+Version: 1.2.30
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -6490,3 +6490,111 @@ body.single-product.smartwerk-theme .smartwerk-product-links a:hover{
 .sw-consent-manage{position:fixed;left:12px;bottom:12px;z-index:99990;border:1px solid #d9dfdc;border-radius:999px;background:#fff;color:#303a36;padding:7px 11px;font:600 11px/1.2 inherit;box-shadow:0 4px 18px rgba(0,0,0,.1);cursor:pointer}
 .sw-consent-open{overflow:hidden}
 @media(max-width:640px){.sw-consent{padding:10px}.sw-consent__panel{padding:20px 16px 16px;border-radius:11px}.sw-consent__actions{grid-template-columns:1fr}.sw-consent__link{grid-column:auto}.sw-consent__setting{align-items:flex-start}.sw-consent-manage{left:8px;bottom:8px}}
+
+
+/* ==========================================================================
+   SMARTWERK 1.2.30 — CI MOBILE BOTTOM NAVIGATION
+   Etsy-inspired interaction pattern, SmartWerk visual identity.
+   ========================================================================== */
+
+.smartwerk-mobile-bottom-nav{
+  display:none;
+}
+
+@media(max-width:760px){
+  body.smartwerk-theme{
+    padding-bottom:calc(88px + env(safe-area-inset-bottom));
+  }
+
+  /* The fixed bottom bar replaces the old hamburger menu on phones. */
+  body.smartwerk-theme .menu-toggle,
+  body.smartwerk-theme .mobile-nav{
+    display:none!important;
+  }
+
+  .smartwerk-mobile-bottom-nav{
+    position:fixed;
+    z-index:99970;
+    left:10px;
+    right:10px;
+    bottom:max(8px,env(safe-area-inset-bottom));
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    align-items:stretch;
+    min-height:72px;
+    padding:5px;
+    border:1px solid rgba(24,63,67,.13);
+    border-radius:27px;
+    background:rgba(255,255,255,.96);
+    box-shadow:0 10px 32px rgba(24,63,67,.16);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+
+  .smartwerk-mobile-bottom-nav__item{
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    min-width:0;
+    min-height:62px;
+    padding:6px 2px;
+    border-radius:22px;
+    color:#526166;
+    text-align:center;
+    text-decoration:none!important;
+    font-size:9.5px;
+    line-height:1.05;
+    font-weight:750;
+    letter-spacing:-.01em;
+    transition:background .16s ease,color .16s ease,transform .16s ease;
+  }
+
+  .smartwerk-mobile-bottom-nav__item svg{
+    width:24px;
+    height:24px;
+    flex:0 0 24px;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.9;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+
+  .smartwerk-mobile-bottom-nav__item span{
+    display:block;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+
+  .smartwerk-mobile-bottom-nav__item.is-active{
+    background:#eaf7f7;
+    color:#0d8790;
+  }
+
+  .smartwerk-mobile-bottom-nav__item:active{
+    transform:scale(.97);
+  }
+
+  /* Keep SmartWerk's own compact header, logo and cart visible. */
+  body.smartwerk-theme .site-header{
+    z-index:99960;
+  }
+
+  body.smartwerk-theme .header-actions{
+    gap:7px;
+  }
+
+  body.smartwerk-theme .cart-button{
+    display:inline-grid;
+  }
+
+  /* Native consent control must not sit underneath the mobile nav. */
+  body.smartwerk-theme .sw-consent-manage{
+    bottom:calc(88px + env(safe-area-inset-bottom));
+  }
+}
