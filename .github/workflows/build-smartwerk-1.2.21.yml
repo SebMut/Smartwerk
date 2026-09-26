@@ -1,0 +1,85 @@
+name: Build SmartWerk Theme 1.2.21
+
+on:
+  push:
+    branches:
+      - smartwerk-theme-1.2.21-product-performance
+    paths:
+      - 'wordpress-theme/smartwerk-1.2.21/**'
+      - '.github/workflows/build-smartwerk-1.2.21.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-theme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required theme files
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="wordpress-theme/smartwerk-1.2.21"
+          test -f "$THEME/style.css"
+          test -f "$THEME/functions.php"
+          test -f "$THEME/header.php"
+          test -f "$THEME/footer.php"
+          test -f "$THEME/page.php"
+          test -f "$THEME/front-page.php"
+          test -f "$THEME/index.php"
+          test -f "$THEME/woocommerce.php"
+          test -f "$THEME/404.php"
+          test -f "$THEME/theme.json"
+          test -f "$THEME/assets/js/theme.js"
+          grep -q "Version: 1.2.21" "$THEME/style.css"
+          grep -q "smartwerk_late_product_performance_scope" "$THEME/functions.php"
+          grep -q "wc-product-gallery-slider" "$THEME/functions.php"
+          ! grep -q "add_theme_support('wc-product-gallery-zoom')" "$THEME/functions.php"
+          ! grep -q "add_theme_support('wc-product-gallery-lightbox')" "$THEME/functions.php"
+
+      - name: PHP lint
+        shell: bash
+        run: |
+          set -euo pipefail
+          find wordpress-theme/smartwerk-1.2.21 -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: JavaScript syntax check
+        shell: bash
+        run: node --check wordpress-theme/smartwerk-1.2.21/assets/js/theme.js
+
+      - name: Build production minified assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          THEME="wordpress-theme/smartwerk-1.2.21"
+          mkdir -p "$THEME/assets/css"
+          npx --yes clean-css-cli@5.6.3 -o "$THEME/assets/css/theme.min.css" "$THEME/style.css"
+          npx --yes terser@5.44.0 "$THEME/assets/js/theme.js" -c -m -o "$THEME/assets/js/theme.min.js"
+          test -s "$THEME/assets/css/theme.min.css"
+          test -s "$THEME/assets/js/theme.min.js"
+          node --check "$THEME/assets/js/theme.min.js"
+
+      - name: Package theme
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd wordpress-theme
+          zip -r ../dist/smartwerk-theme-1.2.21.zip smartwerk-1.2.21 -x '*.DS_Store'
+          cd ..
+          unzip -t dist/smartwerk-theme-1.2.21.zip
+          unzip -l dist/smartwerk-theme-1.2.21.zip | grep -q 'smartwerk-1.2.21/style.css'
+          unzip -l dist/smartwerk-theme-1.2.21.zip | grep -q 'smartwerk-1.2.21/assets/css/theme.min.css'
+          unzip -l dist/smartwerk-theme-1.2.21.zip | grep -q 'smartwerk-1.2.21/assets/js/theme.min.js'
+
+      - name: Upload ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: smartwerk-theme-1.2.21
+          path: dist/smartwerk-theme-1.2.21.zip
+          if-no-files-found: error
+          retention-days: 30
