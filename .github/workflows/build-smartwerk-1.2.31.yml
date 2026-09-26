@@ -1,4 +1,5 @@
 name: Build SmartWerk Theme 1.2.31
+# retry trigger after runner stall
 
 on:
   push:
