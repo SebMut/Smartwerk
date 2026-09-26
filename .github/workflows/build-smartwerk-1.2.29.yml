@@ -3,7 +3,7 @@ name: Build SmartWerk Theme 1.2.29
 on:
   push:
     branches:
-      - smartwerk-theme-1.2.29-etsy-mobile-shop
+      - smartwerk-theme-1.2.29-etsy-shop-hardening
     paths:
       - 'wordpress-theme/smartwerk-1.2.21/**'
       - '.github/workflows/build-smartwerk-1.2.29.yml'
