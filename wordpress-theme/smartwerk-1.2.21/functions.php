@@ -254,7 +254,6 @@ add_filter('woocommerce_add_to_cart_fragments', 'smartwerk_cart_count_fragment')
 function smartwerk_primary_items(): array {
     return [
         ['label' => '3D-Druck',   'url' => home_url('/3d-druck-bestellen/'),       'key' => '3d-druck',   'class' => ''],
-        ['label' => 'Individuell','url' => home_url('/individuelle-anfertigung/'), 'key' => 'individuell','class' => ''],
         ['label' => 'Shop',       'url' => home_url('/smartwerk-shop/'),            'key' => 'shop',       'class' => 'nav-shop'],
         ['label' => 'Projekte',   'url' => home_url('/projekte/'),                  'key' => 'projekte',   'class' => ''],
         ['label' => 'Wissen & STL','url'=> home_url('/stl-dateien/'),               'key' => 'stl-dateien','class' => ''],
@@ -1685,6 +1684,26 @@ function smartwerk_add_home_to_primary_menu(string $items, $args): string {
 add_filter('wp_nav_menu_items', 'smartwerk_add_home_to_primary_menu', 10, 2);
 
 /**
+ * Keep the main navigation focused: "Individuell" remains a real page and is
+ * linked from the 3D-Druck journey, but no longer competes as a top-level item.
+ */
+function smartwerk_remove_individuell_from_primary_menu(array $items, $args): array {
+    if (empty($args->theme_location) || $args->theme_location !== 'primary') {
+        return $items;
+    }
+
+    return array_values(array_filter($items, static function ($item): bool {
+        $title = isset($item->title) ? trim(wp_strip_all_tags((string) $item->title)) : '';
+        $url   = isset($item->url) ? (string) $item->url : '';
+
+        return mb_strtolower($title) !== 'individuell'
+            && !str_contains($url, '/individuelle-anfertigung/');
+    }));
+}
+add_filter('wp_nav_menu_objects', 'smartwerk_remove_individuell_from_primary_menu', 20, 2);
+
+
+/**
  * Also add Home to the theme fallback desktop menu when no WordPress menu is
  * assigned. The five existing SmartWerk sections remain unchanged.
  */
@@ -1714,16 +1733,16 @@ function smartwerk_mobile_bottom_navigation(): void {
 
     $items = [
         [
+            'label' => 'Home',
+            'url'   => home_url('/'),
+            'key'   => 'home',
+            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.5 12 3l8.5 7.5V20a1 1 0 0 1-1 1h-5.3v-6.4H9.8V21H4.5a1 1 0 0 1-1-1z"/></svg>',
+        ],
+        [
             'label' => '3D-Druck',
             'url'   => home_url('/3d-druck-bestellen/'),
             'key'   => '3d-druck',
             'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.8 7v8L12 21l7.2-6V7z"/><path d="m4.8 7 7.2 5 7.2-5M12 12v9"/></svg>',
-        ],
-        [
-            'label' => 'Individuell',
-            'url'   => home_url('/individuelle-anfertigung/'),
-            'key'   => 'individuell',
-            'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 20 4.3-1 10.8-10.8a2.1 2.1 0 0 0-3-3L5.3 16z"/><path d="m14.8 6.5 3 3"/></svg>',
         ],
         [
             'label' => 'Shop',
@@ -1738,7 +1757,7 @@ function smartwerk_mobile_bottom_navigation(): void {
             'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/></svg>',
         ],
         [
-            'label' => 'Wissen & STL',
+            'label' => 'Wissen',
             'url'   => home_url('/stl-dateien/'),
             'key'   => 'stl-dateien',
             'icon'  => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 5.5A3.5 3.5 0 0 1 8 4h4v16H8a3.5 3.5 0 0 0-3.5 1z"/><path d="M19.5 5.5A3.5 3.5 0 0 0 16 4h-4v16h4a3.5 3.5 0 0 1 3.5 1z"/></svg>',
@@ -1748,7 +1767,7 @@ function smartwerk_mobile_bottom_navigation(): void {
     echo '<nav class="smartwerk-mobile-bottom-nav" aria-label="SmartWerk Hauptnavigation">';
 
     foreach ($items as $item) {
-        $active = $current === $item['key'];
+        $active = ($item['key'] === 'home' && is_front_page()) || $current === $item['key'];
 
         printf(
             '<a class="smartwerk-mobile-bottom-nav__item%1$s" href="%2$s"%3$s>%4$s<span>%5$s</span></a>',
