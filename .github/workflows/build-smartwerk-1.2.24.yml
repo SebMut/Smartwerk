@@ -3,7 +3,7 @@ name: Build SmartWerk Theme 1.2.24
 on:
   push:
     branches:
-      - smartwerk-theme-1.2.24-rendering-performance
+      - smartwerk-theme-1.2.24-product-performance
     paths:
       - 'wordpress-theme/smartwerk-1.2.21/**'
       - '.github/workflows/build-smartwerk-1.2.24.yml'
@@ -34,6 +34,8 @@ jobs:
           ! grep -q "fonts.gstatic.com" "$THEME/functions.php"
           ! grep -q "Manrope" "$THEME/style.css"
           grep -q "wc-product-gallery-slider" "$THEME/functions.php"
+          grep -q "smartwerk_disable_wcpay_product_bootstrap" "$THEME/functions.php"
+          grep -q "woocommerce_gallery_full_size" "$THEME/functions.php"
           ! grep -q "add_theme_support('wc-product-gallery-zoom')" "$THEME/functions.php"
           ! grep -q "add_theme_support('wc-product-gallery-lightbox')" "$THEME/functions.php"
 
