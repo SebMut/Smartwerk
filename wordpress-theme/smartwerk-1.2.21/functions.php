@@ -1527,7 +1527,7 @@ function smartwerk_redirect_legacy_pages(): void {
     }
 
     if (is_page(1638)) {
-        wp_safe_redirect(home_url('/3d-druck-bestellen/#individuell'), 301);
+        wp_safe_redirect(home_url('/3d-druck-bestellen/'), 301);
         exit;
     }
 }
