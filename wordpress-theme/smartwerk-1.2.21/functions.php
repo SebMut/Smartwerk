@@ -235,12 +235,18 @@ function smartwerk_cart_url(): string {
  * cookie-free visitor. The existing Store API sync in theme.js hydrates the
  * real count after the page has loaded.
  */
-function smartwerk_cart_count_markup(): string {
-    return '<span class="cart-count" data-cart-count hidden>0</span>';
+function smartwerk_cart_count_markup(bool $read_cart = false): string {
+    $count = $read_cart ? smartwerk_cart_count() : 0;
+
+    return sprintf(
+        '<span class="cart-count" data-cart-count%s>%s</span>',
+        $count === 0 ? ' hidden' : '',
+        esc_html((string) $count)
+    );
 }
 
 function smartwerk_cart_count_fragment(array $fragments): array {
-    $fragments['span.cart-count'] = smartwerk_cart_count_markup();
+    $fragments['span.cart-count'] = smartwerk_cart_count_markup(true);
     return $fragments;
 }
 add_filter('woocommerce_add_to_cart_fragments', 'smartwerk_cart_count_fragment');
