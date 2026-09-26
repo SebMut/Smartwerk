@@ -1696,7 +1696,7 @@ function smartwerk_remove_individuell_from_primary_menu(array $items, $args): ar
         $title = isset($item->title) ? trim(wp_strip_all_tags((string) $item->title)) : '';
         $url   = isset($item->url) ? (string) $item->url : '';
 
-        return mb_strtolower($title) !== 'individuell'
+        return strtolower($title) !== 'individuell'
             && !str_contains($url, '/individuelle-anfertigung/');
     }));
 }
