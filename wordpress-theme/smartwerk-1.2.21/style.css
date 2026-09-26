@@ -3,7 +3,7 @@ Theme Name: SmartWerk
 Theme URI: https://www.smartwerk.art/
 Author: SmartWerk / SM-Solutions
 Description: Eigenständiges SmartWerk Theme für individuellen 3D-Druck, Shop, WooCommerce und WP3DPrinting. Abgeleitet aus dem bestätigten SmartWerk GitHub-Master.
-Version: 1.2.28
+Version: 1.2.29
 Text Domain: smartwerk
 Requires at least: 6.4
 Requires PHP: 8.0
@@ -6926,5 +6926,65 @@ body.single-product.smartwerk-theme .smartwerk-product-links a:hover{
 
   body.page-id-1657.sw-etsy-shop-ui .sw-consent-manage{
     bottom:96px;
+  }
+}
+
+
+/* SmartWerk 1.2.29 — server-rendered Etsy mobile masthead */
+.sw-etsy-mobile-masthead{display:none}
+
+@media(max-width:700px){
+  body.sw-etsy-shop-ui .sw-etsy-mobile-masthead{
+    display:block;
+    width:100%;
+    margin:0;
+    padding:20px 0 4px;
+    background:#1b181d;
+    color:#fff;
+  }
+
+  body.sw-etsy-shop-ui .sw-etsy-mobile-masthead__inner{
+    width:calc(100% - 28px);
+    margin-inline:auto;
+  }
+
+  body.sw-etsy-shop-ui .sw-etsy-mobile-masthead h1{
+    margin:0 0 24px;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(2.25rem,9.2vw,3rem);
+    font-weight:500;
+    line-height:1.03;
+    letter-spacing:-.03em;
+  }
+
+  body.sw-etsy-shop-ui .sw-etsy-mobile-masthead .sw-etsy-search{
+    margin-bottom:28px;
+  }
+
+  body.sw-etsy-shop-ui .sw-etsy-mobile-masthead .sw-etsy-tabs{
+    margin-bottom:14px;
+  }
+
+  body.sw-etsy-shop-ui .sw-shop-hero{
+    display:none!important;
+  }
+
+  body.sw-etsy-shop-ui .sw-shop-catalog{
+    padding-top:4px!important;
+  }
+
+  body.sw-etsy-shop-ui .smartwerk-shop-category-nav,
+  body.sw-etsy-shop-ui .smartwerk-shop-filters,
+  body.sw-etsy-shop-ui .sw-shop-toolbar,
+  body.sw-etsy-shop-ui .woocommerce-result-count,
+  body.sw-etsy-shop-ui .woocommerce-ordering{
+    display:none!important;
+  }
+
+  body.sw-etsy-shop-ui .sw-shop-products .woocommerce ul.products,
+  body.sw-etsy-shop-ui .sw-shop-products ul.products,
+  body.sw-etsy-shop-ui .woocommerce ul.products{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
   }
 }
