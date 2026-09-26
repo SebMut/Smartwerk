@@ -471,7 +471,93 @@
     });
   }
 
+
+  function setupNativeConsent() {
+    const root = document.querySelector('[data-sw-consent]');
+    const manage = document.querySelector('[data-sw-consent-manage]');
+    if (!root) return;
+
+    const storageKey = 'smartwerk_consent_v1';
+    const settingsPanel = root.querySelector('[data-sw-consent-settings-panel]');
+    const analytics = root.querySelector('[data-sw-consent-category="analytics"]');
+    const marketing = root.querySelector('[data-sw-consent-category="marketing"]');
+    let previousFocus = null;
+
+    const read = () => {
+      try { return JSON.parse(localStorage.getItem(storageKey) || 'null'); }
+      catch (_) { return null; }
+    };
+
+    const publish = consent => {
+      window.smartwerkConsent = consent;
+      window.dispatchEvent(new CustomEvent('smartwerk:consent', { detail: consent }));
+    };
+
+    const close = () => {
+      root.hidden = true;
+      document.documentElement.classList.remove('sw-consent-open');
+      previousFocus?.focus?.();
+    };
+
+    const open = (showSettings = false) => {
+      previousFocus = document.activeElement;
+      const current = read();
+      if (analytics) analytics.checked = Boolean(current?.analytics);
+      if (marketing) marketing.checked = Boolean(current?.marketing);
+      if (settingsPanel) settingsPanel.hidden = !showSettings;
+      root.hidden = false;
+      document.documentElement.classList.add('sw-consent-open');
+      window.setTimeout(() => root.querySelector('button')?.focus(), 0);
+    };
+
+    const save = consent => {
+      const value = {
+        necessary: true,
+        analytics: Boolean(consent.analytics),
+        marketing: Boolean(consent.marketing),
+        updated: new Date().toISOString()
+      };
+      try { localStorage.setItem(storageKey, JSON.stringify(value)); } catch (_) {}
+      publish(value);
+      close();
+    };
+
+    root.querySelectorAll('[data-sw-consent-all]').forEach(button =>
+      button.addEventListener('click', () => save({ analytics: true, marketing: true }))
+    );
+    root.querySelectorAll('[data-sw-consent-essential]').forEach(button =>
+      button.addEventListener('click', () => save({ analytics: false, marketing: false }))
+    );
+    root.querySelector('[data-sw-consent-settings]')?.addEventListener('click', () => {
+      if (settingsPanel) settingsPanel.hidden = false;
+    });
+    root.querySelector('[data-sw-consent-save]')?.addEventListener('click', () =>
+      save({ analytics: analytics?.checked, marketing: marketing?.checked })
+    );
+    manage?.addEventListener('click', () => open(true));
+
+    root.addEventListener('keydown', event => {
+      if (event.key === 'Escape') save({ analytics: false, marketing: false });
+      if (event.key !== 'Tab') return;
+      const focusable = [...root.querySelectorAll('button:not([hidden]), a[href], input:not([disabled])')]
+        .filter(node => !node.closest('[hidden]'));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first.focus();
+      }
+    });
+
+    const current = read();
+    if (current?.necessary === true) publish(current);
+    else open(false);
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
+    setupNativeConsent();
     setupMobileMenu();
     setupMobileKnowledge();
     setupCartCountSync();
