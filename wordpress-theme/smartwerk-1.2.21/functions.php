@@ -44,12 +44,6 @@ function smartwerk_assets(): void {
     $style_ver       = is_readable($style_file) ? $version . '.' . filemtime($style_file) : $version;
     $script_ver      = is_readable($script_file) ? $version . '.' . filemtime($script_file) : $version;
 
-    wp_enqueue_style(
-        'smartwerk-fonts',
-        'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap',
-        [],
-        null
-    );
 
     wp_enqueue_style(
         'smartwerk-style',
@@ -75,33 +69,6 @@ function smartwerk_assets(): void {
     );
 }
 add_action('wp_enqueue_scripts', 'smartwerk_assets');
-
-function smartwerk_async_font_stylesheet(string $html, string $handle, string $href, string $media): string {
-    if ($handle !== 'smartwerk-fonts') {
-        return $html;
-    }
-
-    $url = esc_url($href);
-
-    return sprintf(
-        '<link rel="preload" as="style" href="%1$s" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="%1$s"></noscript>' . "\n",
-        $url
-    );
-}
-add_filter('style_loader_tag', 'smartwerk_async_font_stylesheet', 10, 4);
-
-function smartwerk_resource_hints(array $urls, string $relation_type): array {
-    if ($relation_type === 'preconnect') {
-        $urls[] = 'https://fonts.googleapis.com';
-        $urls[] = [
-            'href'        => 'https://fonts.gstatic.com',
-            'crossorigin' => 'anonymous',
-        ];
-    }
-
-    return $urls;
-}
-add_filter('wp_resource_hints', 'smartwerk_resource_hints', 10, 2);
 
 function smartwerk_remove_frontend_overhead(): void {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
