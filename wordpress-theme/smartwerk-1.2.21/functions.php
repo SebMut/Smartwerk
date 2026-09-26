@@ -1649,3 +1649,44 @@ function smartwerk_consent_settings_link(): void {
     echo '<button type="button" class="sw-consent-manage" data-sw-consent-manage>Cookie-Einstellungen</button>';
 }
 add_action('wp_footer', 'smartwerk_consent_settings_link', 6);
+
+
+/**
+ * SmartWerk 1.2.28 — Etsy-inspired mobile shop navigation.
+ * Presentation only: all commerce remains native WooCommerce.
+ */
+function smartwerk_etsy_mobile_shop_nav(): void {
+    if (!is_page(1657)) {
+        return;
+    }
+
+    $account_url = function_exists('wc_get_page_permalink')
+        ? wc_get_page_permalink('myaccount')
+        : home_url('/mein-konto/');
+    ?>
+    <nav class="sw-etsy-mobile-nav" aria-label="Mobile Shop-Navigation">
+        <a class="sw-etsy-mobile-nav__item" href="<?php echo esc_url(home_url('/')); ?>">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.8 12 3l9 7.8v9.1a1 1 0 0 1-1 1h-5.3v-6.5H9.3v6.5H4a1 1 0 0 1-1-1z"/></svg>
+            <span>Home</span>
+        </a>
+        <a class="sw-etsy-mobile-nav__item is-active" href="<?php echo esc_url(get_permalink(1657)); ?>" aria-current="page">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5h17l-1 12h-15zM7 7.5a5 5 0 0 1 10 0"/></svg>
+            <span>Shoppen</span>
+        </a>
+        <button class="sw-etsy-mobile-nav__item" type="button" data-sw-etsy-favorites-filter aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.7 4.1 13A5.2 5.2 0 0 1 11.5 5.7L12 6.2l.5-.5A5.2 5.2 0 0 1 19.9 13z"/></svg>
+            <span>Favoriten</span>
+        </button>
+        <a class="sw-etsy-mobile-nav__item" href="<?php echo esc_url($account_url); ?>">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.7 21a7.3 7.3 0 0 1 14.6 0"/></svg>
+            <span>Du</span>
+        </a>
+        <a class="sw-etsy-mobile-nav__item sw-etsy-mobile-nav__cart" href="<?php echo esc_url(smartwerk_cart_url()); ?>">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 4.5h2l1.7 9.1a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4l1.2-5.3H7.1M9.5 19a1.25 1.25 0 1 0 0 .01M17.3 19a1.25 1.25 0 1 0 0 .01"/></svg>
+            <?php echo smartwerk_cart_count_markup(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+            <span>Warenkorb</span>
+        </a>
+    </nav>
+    <?php
+}
+add_action('wp_footer', 'smartwerk_etsy_mobile_shop_nav', 20);
